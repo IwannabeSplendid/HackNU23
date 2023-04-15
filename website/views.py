@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
+import requests
 
 # Home page view extends the index.html template
 # track, login buttons 
@@ -13,9 +14,23 @@ def home(request):
     if request.method == "POST":
         iin = request.POST['iin']
         order_number = request.POST['order_number']
-        return JsonResponse({'iin': iin, 'order_number': order_number})
+        
+        token = get_token()
+        url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
+        client_info = requests.get(url, headers={'Authorization': token})
+
+        
+        return JsonResponse(client_info.json())
     
     return render(request, 'home.html')
+
+def get_token():
+    url = 'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token'
+    myobj = {'username': 'test-operator', 'password' : 'DjrsmA9RMXRl', 'client_id' : 'cw-queue-service', 'grant_type' : 'password'}
+
+    token = requests.post(url, json = myobj)
+    
+    return token.text
 
 
 def login_view(request):

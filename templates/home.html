@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load static %}
-{% csrf_token %}
 
 <html>
 <head>
@@ -14,6 +13,7 @@
     </div>
     <div class = "track_form">
         <form method = "post">
+            {% csrf_token %}
             <div>
                 <input type = "text" class = "" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
                 <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
