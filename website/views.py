@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 import requests
 import googlemaps
 from datetime import datetime
+import random
+from django.db.models import Q
 
 # Home page view extends the index.html template
 # track, login buttons 
@@ -116,6 +118,32 @@ def payment(request, order_id):
     
     return render(request, 'payment.html', data)
 
+@login_required
+def courier_page(request, username, object_id_list = []):
+    courier = Courier.objects.get(user__username = username)
+    orders = list(Order.objects.filter(~Q(order_id__in=object_id_list)))
+    order= random.choice(orders)
+    data = {'courier_name': courier.first_name + ' ' + courier.last_name,
+            'courier_company': courier.company_id.company_name,
+            'courier_image': courier.photo,
+            'courier_rating': courier.rating,
+            'order_time': order.date,
+            'order_address': order.address,
+            'order_id': order.order_id,
+            'order_department': order.department.dep_name,
+            'order_description': order.description,
+            'order_client': capitalizeFirstLetter(order.client.first_name) + ' ' + capitalizeFirstLetter(order.client.last_name),
+            'order_dep_address': order.department.address,
+            }
+    if request.method == "POST":
+        print(request.POST)
+        if "decline" in request.POST:
+            object_id_list = [order.order_id]
+            return HttpResponseRedirect(reverse('courier_page', args=(username, object_id_list)))
+    
+    return render(request, 'courier.html', data)
+    
+
 def get_token():
     url = 'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token'
     data = {'username': 'test-operator', 'password' : 'DjrsmA9RMXRl', 'client_id' : 'cw-queue-service', 'grant_type' : 'password'}
@@ -123,7 +151,6 @@ def get_token():
     token = requests.post(url, data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
     
     return token.json()['access_token']
-
 
 def login(request):
     #when submitted (button clicked)
@@ -136,12 +163,16 @@ def login(request):
         #redirect to their pages
         if user is not None: 
             auth_login(request, user)
-            return HttpResponseRedirect(reverse('home'))
+            
+            if Courier.objects.filter(user__username = username).exists():
+                return HttpResponseRedirect(reverse('courier', args = [username]))
+            elif Employee.objects.filter(user__username = username).exists():
+                return HttpResponseRedirect(reverse('employee_page', args = [username]))
         else:
             return render(request, 'users/login.html', {
                 'message': 'Invalid credentials'
             })
-            
+        
     return render(request, 'login.html')
             
 def logout(request):

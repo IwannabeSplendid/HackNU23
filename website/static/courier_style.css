@@ -1,0 +1,149 @@
+body {
+    margin: 0;
+    background-color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.header {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #8492ff;
+}
+
+.Company {
+    margin-top: 15px;
+    font-size: 15px;
+    position: absolute;
+    left: 20px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+.Courier_name {
+    
+    font-size: 16px;
+    position: absolute;
+    right: 140px;
+    height: 100%;
+    color: #dde0e4;
+    padding: 0;
+    font-weight: bold;
+	text-decoration: underline;
+}
+.header input { 
+    font-size: 18px;
+    transition: 0.2s;
+    position: absolute;
+    height: 100%;
+    text-decoration: none;
+    color: #f5f8fc;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: #8492ff;
+}
+
+.header input:hover {
+    background-color: #7b8aff;
+    transition: 0.2s;
+}
+
+.header_logout {
+    top: 0;
+    right: 50px;
+    width: 90px;
+}
+
+.courier_info {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #F8F8F8;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.courier_photo {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  .courier_photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .courier_details {
+    margin-left: 20px;
+  }
+  
+  .courier_name {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .company_name {
+    font-size: 24px;
+    font-weight: medium;
+    margin: 0;
+  }
+  
+  .order_count {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .rating {
+    font-size: 24px;
+  }
+  
+  .star {
+    color: #FFD700;
+    margin-right: 5px;
+  }
+  .rating_number {
+    margin-left: 10px;
+    font-weight: bold;
+  }
+
+  .new_order{
+    margin-top: 0px;
+    padding: 30px;
+    align-items: center;
+  }
+
+  .decline-btn {
+    background-color: #f44336;
+    color: #fff;
+    border: 1px solid #b19a9a;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .new_order decline-btn:hover {
+    background-color: #e53935;
+  }
+
+  .getCode-btn {
+    background-color: #2cdb35;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    left: 50px;
+  }
+
+  .getCode-btn:hover {
+    background-color: #27c22e;
+  }

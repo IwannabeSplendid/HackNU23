@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{%load static%}
+
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'courier_style.css' %}">
+    <title>Courier Order Page</title>
+    </head>
+<body>
+    <div class = "header">
+        <p class = "Company">{{courier_company}}</p>
+        <p class = "Courier_name">{{courier_name}}</p>
+        <a href="{% url 'logout' %}"> <input type = "button" value = "Выйти" class = "header_logout"></a>
+    </div>
+
+    <div class = "courier_info">
+        <div class = "courier_photo">
+            <img src="media/images/cr1.jpeg" alt="Profile Picture">
+        </div>
+        <div class = "courier_details">
+            <h2 class="courier_name"> {{courier_name}} </h2>
+            <p class="company_name"> {{courier_company}} </p>
+            <div class ="rating">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="rating_number">{{ courier_rating}}</span>
+            </div>
+        </div>
+    </div>
+
+	<div class = "new_order"> 
+		<h3>Время оформления заказа: {{order_time}}</h3>
+		<h3>Номер заявки: {{order_id}}</h3>
+		<h3>ФИО клиента: {{order_client}}</h3>
+		<h3>Название госуслуги: {{order_description}}</h3>
+		<h3>Отделение ЦОНа: {{order_department}}</h3>
+		<h3>Адрес ЦОНа: {{order_dep_address}}</h3>
+        <h3>Адрес доставки: {{order_address}}</h3>
+		<button type="submit" name='decline' class="decline-btn">Отказаться</button>
+		<button type="submit" name='accept' class="getCode-btn">Получить код</button>
+	</div>
+</body>
+</html>
