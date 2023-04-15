@@ -44,7 +44,7 @@ class Client(models.Model):
     last_name = models.CharField(max_length=30)
     IIN = models.IntegerField(unique=True)
     phone_number = models.CharField(max_length=15, blank = True, null = True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null = True)
 
 class Order(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
