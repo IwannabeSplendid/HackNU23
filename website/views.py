@@ -17,10 +17,10 @@ def home(request):
         
         token = get_token()
         url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
-        client_info = requests.get(url, headers={'Authorization': token})
+        client_info = requests.get(url, headers={'authorization': 'Bearer ' + token})
 
         
-        return JsonResponse(client_info.json())
+        return client_info
     
     return render(request, 'home.html')
 
