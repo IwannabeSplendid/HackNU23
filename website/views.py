@@ -15,14 +15,17 @@ def home(request):
         iin = request.POST['iin']
         order_number = request.POST['order_number']
         
-        token = get_token()
-        url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
-        client_info = requests.get(url, headers = {'authorization': 'Bearer ' + token}).json()
-        iin = client_info['iin']
+        client_info = get_client_info(iin)
+        phone = get_phone_number(iin)
         if not Client.objects.filter(IIN=iin).exists():
-            client = Client(first_name = client_info['firstName'], last_name = client_info['lastName'], IIN = client_info['iin'])
+            client = Client(first_name = client_info['firstName'], last_name = client_info['lastName'], IIN = client_info['iin'], phone_number = phone)
             client.save()
-        
+            
+        order = Order.objects.get(order_id = order_number)
+        print(order.client.IIN)
+        if order.client.IIN == Client.objects.get(IIN=iin):
+            return JsonResponse({'Message': 'Ok'})#render(request, 'order.html', {'order': order})
+            
         return JsonResponse(client_info)
     
     return render(request, 'home.html')
@@ -44,7 +47,7 @@ def login(request):
         #authenticate user
         iin = request.POST['iin']
         password = request.POST['password']
-        user = authenticate(request, username = iin, password = password)
+        user = authenticate(request, iin = iin, password = password)
         
         #redirect to their pages
         if user is not None: 
@@ -67,11 +70,17 @@ def send_sms(phone_number, message):
     
     
 
-# def index(request):
-#     return render(request, 'index.html')
+def get_phone_number(iin):
+    token = get_token()
+    url = 'http://hakaton.gov4c.kz/api/bmg/check/' + iin
+    phone = requests.get(url, headers = {'authorization': 'Bearer ' + token}).json()['phone']
+    return phone
 
-# def index(request):
-#     return render(request, 'index.html')
+def get_client_info(iin):
+    token = get_token()
+    url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
+    client_info = requests.get(url, headers = {'authorization': 'Bearer ' + token}).json()
+    return client_info
 
 # def index(request):
 #     return render(request, 'index.html')
