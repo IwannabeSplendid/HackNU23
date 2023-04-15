@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    background-color: #ffffff;
+    font-family: "Helvetica", sans-serif;
+}
+
+.header {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #8492ff;
+}
+
+.header input { 
+    font-size: 18px;
+    transition: 0.2s;
+    position: absolute;
+    height: 100%;
+    width: 100px;
+    text-decoration: none;
+    color: #f5f8fc;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: #8492ff;
+}
+
+.header input:hover {
+    background-color: #7b8aff;
+    transition: 0.2s;
+}
+
+.header_track {
+    top: 0;
+    left: 0;
+}
+
+.header_login {
+    top: 0;
+    right: 0;
+}
+
+.track_form {
+    padding: 25px;
+    position: relative;
+    top: 250px;
+    width: 500px;
+    height: 180px;
+    background-color: #c0c7ff;
+    margin: 0 auto;
+    color: #f4f9ff;
+    text-align: center;
+}
+
+.track_form input {
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    width: 100%;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 0px;
+}
+
+::placeholder{
+
+    color: #c6cdff;
+    
+    }
+
+.track_form_button {
+    transition: 0.2s;
+    margin-top: 10px;
+    height: 55px;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px 20px 10px 20px;
+    background-color: #8492ff;
+    font-family: "Helvetica", sans-serif;
+}
+
+.track_form_button:hover {
+    transition: 0.2s;
+    background-color: #7b8aff;
+}
