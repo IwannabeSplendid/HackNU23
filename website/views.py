@@ -45,8 +45,28 @@ def construct_order(request, order_id):
                     }
     
     if request.method == "POST":
-        iin = request.POST['iin']
+        region = request.POST['region']
+        city = request.POST['city']
+        street = request.POST['street']
+        house = request.POST['house']
+        apartment = request.POST['apartment']
         order_number = request.POST['order_number']
+        floor = request.POST['floor']
+        corpus = request.POST['corpus']
+        zk_name = request.POST['zk_name']
+        trustee = request.POST['trustee']
+    #     class Address(models.Model):
+    # oblast = models.CharField(max_length=30) # область
+    # city = models.CharField(max_length=30)
+    # street_name = models.CharField(max_length=30, blank = True, null = True)
+    # house_number = models.CharField(max_length=30, blank = True, null = True)
+    # apartment_number = models.IntegerField()
+    # podezd = models.CharField(max_length=30, blank = True, null = True) # подъезд
+    # corpus = models.CharField(max_length=30, blank = True, null = True)
+    # zk_name = models.CharField(max_length=30, blank = True, null = True) # название ЖК
+    # add_info = models.TextField(blank = True, null = True)
+        client = order.client
+        address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment, floor = floor, corpus = corpus, zk_name = zk_name, trustee = trustee)
         client_info = get_client_info(iin)
         phone = get_phone_number(iin)
         if not Client.objects.filter(IIN=iin).exists():

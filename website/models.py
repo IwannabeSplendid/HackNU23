@@ -20,6 +20,7 @@ class Address(models.Model):
     apartment_number = models.IntegerField()
     podezd = models.CharField(max_length=30, blank = True, null = True) # подъезд
     corpus = models.CharField(max_length=30, blank = True, null = True)
+    floor = models.IntegerField(blank = True, null = True)
     zk_name = models.CharField(max_length=30, blank = True, null = True) # название ЖК
     add_info = models.TextField(blank = True, null = True)
     
