@@ -50,6 +50,16 @@
                 </select>
                 <div class = "all_inputs">
                     <div class = "inputs_short">
+                        <label class="full-field">
+                            <!-- Avoid the word "address" in id, name, or label text to avoid browser autofill from conflicting with Place Autocomplete. Star or comment bug https://crbug.com/587466 to request Chromium to honor autocomplete="off" attribute. -->
+                            <span class="form-label">Deliver to</span>
+                            <input
+                              id="ship-address"
+                              name="ship-address"
+                              required
+                              autocomplete="off"
+                            />
+                          </label>
                         <input type = "text" id = "city" name = "city" placeholder = "Город"><span></span>
                         <input type = "text" class = "street" id = "street" name = "street" placeholder = "Улица"><span></span>
                         <input type = "text" id = "house" name = "house" placeholder = "Номер дома"><span></span><br>
@@ -78,3 +88,62 @@
     </div>
 </body>
 </html>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10&libraries=places"></script>
+<script type="text/javascript">
+    google.maps.event.addDomListener(window, 'load', initialize);
+      function initialize() {
+        var input = document.getElementById('ship-address');
+        var autocomplete = new google.maps.places.Autocomplete(input,{
+          componentRestrictions: { country: ["kaz"] },
+          fields: ["address_components", "geometry"],
+          types: ["address"],
+        });
+        alert("componentType")
+        autocomplete.addListener('place_changed', function fillInAddress() {
+            // Get the place details from the autocomplete object.
+            const place = autocomplete.getPlace();
+            let address1 = "";
+            let postcode = "";
+            
+          
+            for (const component of place.address_components) {
+              // @ts-ignore remove once typings fixed
+              const componentType = component.types[0];
+              
+          
+              switch (componentType) {
+                case "street_number": {
+                    document.getElementById("house").value = component.long_name;
+                  break;
+                }
+          
+                case "route": {
+                    document.getElementById("street").value = component.long_name;
+                  break;
+                }
+          
+                case "postal_code_suffix": {
+                  postcode = `${postcode}-${component.long_name}`;
+                  break;
+                }
+                case "locality":
+                  document.getElementById("city").value = component.long_name;
+                  
+                  break;
+                case "administrative_area_level_1": {
+                  document.querySelector("#region").value = component.short_name;
+                  break;
+                }
+                {% comment %} case "country":
+                  document.querySelector("#country").value = component.long_name;
+                  break; {% endcomment %}
+              }
+            }
+          
+            address2Field.focus();
+          }
+        );
+    }
+  
+  </script> 
