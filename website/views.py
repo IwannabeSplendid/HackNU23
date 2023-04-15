@@ -139,7 +139,7 @@ def courier_page(request, username, object_id_list = []):
         print(request.POST)
         if "decline" in request.POST:
             object_id_list = [order.order_id]
-            return HttpResponseRedirect(reverse('courier_page', args=(username, object_id_list)))
+            return HttpResponseRedirect(reverse('courier', args=(username, object_id_list, )))
     
     return render(request, 'courier.html', data)
     

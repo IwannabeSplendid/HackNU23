@@ -39,8 +39,11 @@
 		<h3>Отделение ЦОНа: {{order_department}}</h3>
 		<h3>Адрес ЦОНа: {{order_dep_address}}</h3>
         <h3>Адрес доставки: {{order_address}}</h3>
-		<button type="submit" name='decline' class="decline-btn">Отказаться</button>
-		<button type="submit" name='accept' class="getCode-btn">Получить код</button>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" name='decline' class="decline-btn" >Отказаться</button>
+            <button type="submit" name='accept' class="getCode-btn" >Получить код</button>
+        </form>
 	</div>
 </body>
 </html>

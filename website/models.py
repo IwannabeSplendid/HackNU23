@@ -44,6 +44,7 @@ class Courier(models.Model):
     status = models.CharField(max_length=30, choices=[("A", "Available"),("B", "Busy handling a package")])
     rating = models.IntegerField() # 1-5
     photo = models.ImageField(upload_to='images', blank=True, null=True)
+    declined_order = models.ForeignKey('Order', on_delete=models.CASCADE, blank = True, null = True, related_name='declined_order')
     
     def __str__(self):
         return self.first_name
