@@ -15,8 +15,8 @@ class Company(models.Model):
 class Address(models.Model):
     oblast = models.CharField(max_length=30) # область
     city = models.CharField(max_length=30)
-    street_name = models.CharField(max_length=30)
-    house_number = models.CharField(max_length=30)
+    street_name = models.CharField(max_length=30, blank = True, null = True)
+    house_number = models.CharField(max_length=30, blank = True, null = True)
     apartment_number = models.IntegerField()
     podezd = models.CharField(max_length=30, blank = True, null = True) # подъезд
     corpus = models.CharField(max_length=30, blank = True, null = True)
