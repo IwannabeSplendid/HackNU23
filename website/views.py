@@ -55,18 +55,8 @@ def construct_order(request, order_id):
         corpus = request.POST['corpus']
         zk_name = request.POST['zk_name']
         trustee = request.POST['trustee']
-    #     class Address(models.Model):
-    # oblast = models.CharField(max_length=30) # область
-    # city = models.CharField(max_length=30)
-    # street_name = models.CharField(max_length=30, blank = True, null = True)
-    # house_number = models.CharField(max_length=30, blank = True, null = True)
-    # apartment_number = models.IntegerField()
-    # podezd = models.CharField(max_length=30, blank = True, null = True) # подъезд
-    # corpus = models.CharField(max_length=30, blank = True, null = True)
-    # zk_name = models.CharField(max_length=30, blank = True, null = True) # название ЖК
-    # add_info = models.TextField(blank = True, null = True)
         client = order.client
-        address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment, floor = floor, corpus = corpus, zk_name = zk_name, trustee = trustee)
+        address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment, floor = floor, podezd = order_number, corpus = corpus, zk_name = zk_name, trustee = trustee)
         client_info = get_client_info(iin)
         phone = get_phone_number(iin)
         if not Client.objects.filter(IIN=iin).exists():
@@ -85,7 +75,7 @@ def construct_order(request, order_id):
 def payment(request, order_id):
     order = Order.objects.get(order_id = order_id)
 
-    gmaps = googlemaps.Client(key='AIzaSyDNttvAKiXJfCcj3HMoyRTip39IyO0AhNA')
+    gmaps = googlemaps.Client(key='AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
 
     # Geocoding an address
     geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
@@ -118,7 +108,7 @@ def payment(request, order_id):
         #save
         return 0 
     
-    return render(request, 'payement.html')
+    return render(request, 'payment.html')
 
 def get_token():
     url = 'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token'

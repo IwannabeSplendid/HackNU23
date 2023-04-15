@@ -22,5 +22,5 @@ urlpatterns = [
     path('', website.home, name='home'),
     path('login/', website.login, name='login'),
     path('order/<int:order_id>', website.construct_order, name='order'),
-    path('order/<int:order_id>/payement', website.payment, name='payment'),
+    path('order/<int:order_id>/payment', website.payment, name='payment'),
 ]
