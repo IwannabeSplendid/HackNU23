@@ -17,7 +17,7 @@ class Address(models.Model):
     city = models.CharField(max_length=30)
     street_name = models.CharField(max_length=30, blank = True, null = True)
     house_number = models.CharField(max_length=30, blank = True, null = True)
-    apartment_number = models.IntegerField()
+    apartment_number = models.IntegerField(blank = True, null = True)
     podezd = models.CharField(max_length=30, blank = True, null = True) # подъезд
     corpus = models.CharField(max_length=30, blank = True, null = True)
     floor = models.IntegerField(blank = True, null = True)

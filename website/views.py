@@ -55,16 +55,19 @@ def construct_order(request, order_id):
         corpus = request.POST['corpus']
         zk_name = request.POST['zk_name']
         trustee = request.POST['trustee']
+        extra = request.POST.get('extra', None)
         
-        address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment, 
-                          floor = floor, podezd = order_number, corpus = corpus, zk_name = zk_name)
+        address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment or None, 
+                          floor = floor or None, podezd = order_number or None, corpus = corpus or None, zk_name = zk_name or None, add_info = extra or None)
+        address.save()
         order.address =address
+        order.date = datetime.now()
         if Client.objects.filter(IIN=trustee).exists():
             order.trustee = trustee
         order.save()
         order.client.address = address
         order.client.save() 
-        return redirect('payment', order_id = order_number)
+        return redirect('payment', order_id = order.order_id)
     
     return render(request, 'client.html', data)
 
