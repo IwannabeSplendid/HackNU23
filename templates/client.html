@@ -13,18 +13,19 @@
         <input type = "button" value = "Отследить" class = "header_track">
         <a href = "/login"></a><input type = "button" value = "Войти" class = "header_login"></a>
     </div>
+    <p class = "main">Здравстуйте, {{ client_first_name }}! Документ по заказу {{ order_id }} готов к отправлению.</p>
     <div class = "track_form">
-        <p>Здравстуйте, {{ client_first_name }}! Документ по заказу {{ order_id }} готов к отправлению, выберите способ доставки:</p>
-        <p>Услуга: {{ order_description }}</p>
-        <p>Отделение: {{ order_department }}</p>
-        <p>Данные получателя</p>
-        <p>{{ client_first_name }} {{ client_last_name }} </p>
-        <p>Номер телефона: {{ client_first_name }}</p>
-        <p>Данные получателя</p>
+        <p class = "service">Услуга: {{ order_description }}.</p>
+        <p class = "sector">Отделение: {{ order_department }}</p>
+        <p class = "main_2">Данные получателя</p>
+        <p class = "initials">{{ client_first_name }} {{ client_last_name }} </p>
+        <p class = "phone">Номер телефона: {{ client_phone_number }}</p>
+        <p  class = "main_3">Для оформления доставки заполните следующие данные:</p>
         <form method = "post">
             {% csrf_token %}
             <div>
-                <select id="country" name="country">
+                <select id="region" name="region" class = "region">
+                    <option value="" selected disabled hidden>Выберите область</option>
                     <option value="abai">Область Абай</option>
                     <option value="akmola">Акмолинская область</option>
                     <option value="aktobe">Актюбинская область</option>
@@ -42,16 +43,29 @@
                     <option value="pavlodar">Павлодарская область</option>
                     <option value="sever">Северо-Казахстанская область</option>
                     <option value="turkestan">Туркестанская область</option>
-                    </select>
-                <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
-                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
-                <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
-                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
-                <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
-                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
-                <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
+                </select><br>
+                <input type = "text" id = "city" name = "city" placeholder = "Город">
+                <input type = "text" class = "street" id = "street" name = "street" placeholder = "Улица"><br>
+                <input type = "text" id = "house" name = "house" placeholder = "Номер дома">
+                <input type = "text" class = "apartment" id = "apartment" name = "apartment" placeholder = "Квартира"><br>
+                <input type = "text" id = "order_number" name = "order_number" placeholder = "Подъезд">
+                <input type = "text" class = "floor" id = "floor" name = "floor" placeholder = "Этаж"><br>
+                <input type = "text" id = "corpus" name = "corpus" placeholder = "Корпус">
+                <input type = "text" id = "corpus" name = "corpus" placeholder = "Наименование ЖК"><br>
+                <input type = "text" id = "trustee" name = "trustee" placeholder = "Доверенное лицо">
+                <textarea name="extra" form="usrform" placeholder = "Дополнительная информация"></textarea>
+                <div class = "checkbox_container">
+                    <label class="c_1">Я принимаю условия публичного договора-оферты (добавить графу с возможностью для клиента проставления галочки, при нажатии на публичного договора-оферты (для теста можно что угодно) переводить на данный договор)
+                        <input type = "checkbox" class = "password_toggle">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="c_2">Я ознакомлен и согласен с условиями политики конфиденциальности и персональных данных (добавить графу с возможностью для клиента проставления галочки, при нажатии на условиями политики конфиденциальности и персональных данных (для теста можно что угодно) переводить на данные условия)
+                        <input type = "checkbox" class = "password_toggle">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
             </div>
-            <input type = "submit" value = "Отследить" class = "track_form_button">
+            <input type = "submit" value = "Заказать доставку" class = "track_form_button">
         </form> 
     </div>
 </body>

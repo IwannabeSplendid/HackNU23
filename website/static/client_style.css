@@ -1,0 +1,224 @@
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.header {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #8492ff;
+}
+
+.contact {
+    margin-top: 18px;
+    font-size: 15px;
+    position: absolute;
+    left: 20px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+
+.contact_call {
+    margin-top: 18px;
+    font-size: 15px;
+    position: absolute;
+    left: 70px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+
+.header input { 
+    font-size: 18px;
+    transition: 0.2s;
+    position: absolute;
+    height: 100%;
+    text-decoration: none;
+    color: #f5f8fc;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: #8492ff;
+}
+
+.header input:hover {
+    background-color: #7b8aff;
+    transition: 0.2s;
+}
+
+.header_track {
+    top: 0;
+    right: 140px;
+    width: 125px;
+}
+
+.header_login {
+    top: 0;
+    right: 50px;
+    width: 90px;
+}
+
+.track_form {
+    position: relative;
+    top: 200px;
+    width: 1000px;
+    border-radius: 5px;
+    background-color: #c0c7ff;
+    margin: 0 auto;
+    color: #f4f9ff;
+    text-align: center;
+}
+
+.track_form p {
+    margin: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align: left;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.track_form input {
+    font-size: 16px;
+    padding: 5px;
+    width: 200px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 0px;
+    border-radius: 2px;
+}
+
+.enteriin {
+    margin-top: 15px;
+}
+
+::placeholder {
+    color: #a3aad7;
+}
+
+.track_form_button {
+    transition: 0.2s;
+    margin-top: 0;
+    height: 50px;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px 10px 20px;
+    background-color: #8492ff;
+    border-radius: 2px;
+}
+
+.track_form_button:hover {
+    transition: 0.2s;
+    background-color: #7b8aff;
+}
+
+.checkbox_container {
+    color: #fff;
+    text-align: center;
+    display: block;
+    padding-top: 0;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .c_1 {
+    position: absolute;
+    top: 500px;
+    left: 0;
+  }
+
+  .c_2 {
+    position: absolute;
+    top: 550px;
+    left: 0;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .checkbox_container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 2px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .checkbox_container:hover input ~ .checkmark {
+    background-color: #fff;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .checkbox_container input:checked ~ .checkmark {
+    background-color: #8492ff;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .checkbox_container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .checkbox_container .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 2px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+.main {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    color: black;
+    font-size: 24px;
+}
+
+.region {
+    font-size: 16px;
+    width: 200px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 0px;
+    height: 20px;
+    border-radius: 2px;
+}
