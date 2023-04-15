@@ -14,8 +14,8 @@
         <a href="{% url 'login' %}"></a><input type = "button" value = "Войти" class = "header_login"></a>
     </div>
     <div class = "track_form">
-        <p class "sector">Отделение: {{  }}</p><br>
-        <p class "sector">Адрес доставки: {{  }}</p>
+        <p class "sector">Отделение: {{ dep_name }}</p><br>
+        <p class "sector">Адрес доставки: {{ address  }}</p>
         <table>
             <tr>
                 <th>Delivery company</th>
@@ -25,7 +25,7 @@
             {% for company in companies %}
             <tr>
                 <th>{{ company.name }}</th>
-                <th>{{}}</th>
+                <th>{{ company.cost }}</th>
                 <th>{{ company.business }}</th>
             </tr>
             {% endfor %}
