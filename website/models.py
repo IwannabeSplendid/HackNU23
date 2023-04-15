@@ -38,13 +38,12 @@ class Employee(models.Model):
     last_name = models.CharField(max_length=30, null = True)
     IIN = models.IntegerField(unique=True, null = True)
     department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
-    status = models.CharField(max_length=30, choices=[("A", "Available"),("B", "Busy handling a package")])
 
 class Client(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     IIN = models.IntegerField(unique=True)
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15, blank = True, null = True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
 class Order(models.Model):

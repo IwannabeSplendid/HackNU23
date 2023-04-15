@@ -18,6 +18,13 @@ def home(request):
         token = get_token()
         url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
         client_info = requests.get(url, headers = {'authorization': 'Bearer ' + token}).json()
+    #      first_name = models.CharField(max_length=30)
+    # last_name = models.CharField(max_length=30)
+    # IIN = models.IntegerField(unique=True)
+    # phone_number = models.CharField(max_length=15)
+    # address = models.ForeignKey(Address, on_delete=models.CASCADE)
+        client = Client(first_name = client_info['firstName'], last_name = client_info['lastName'], IIN = client_info['iin'])
+        
         return JsonResponse(client_info)
     
     return render(request, 'home.html')
@@ -56,10 +63,11 @@ def login(request):
             
 def send_sms(phone_number, message):
     token = get_token()
-    url = 'http://hakaton-sms.gov4c.kz/api/smsgateway/send'
+    url = 'http://hak-sms123.gov4c.kz/api/smsgateway/send'
     data = {"phone" : phone_number, "smsText" : message}
-
-    x = requests.post(url, headers = {'authorization': 'Bearer ' + token, 'Content-Type' : 'application/json'}).json()
+    
+    x = requests.post(url, headers = {'authorization': 'Bearer ' + token}, data = data)
+    print(x.text)
     
     
 
