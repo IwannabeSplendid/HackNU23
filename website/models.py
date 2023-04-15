@@ -59,12 +59,13 @@ class Client(models.Model):
     IIN = models.CharField(max_length = 15, unique=True)
     phone_number = models.CharField(max_length=15, blank = True, null = True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null = True)
+    trusty = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null = True)
     
     def __str__(self):
         return self.first_name
 
 class Order(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='client')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
     order_id = models.CharField(max_length = 15, unique=True)
     courier = models.ForeignKey(Courier, on_delete=models.SET_NULL, blank = True, null = True)
     description = models.TextField(max_length=200)
@@ -72,7 +73,6 @@ class Order(models.Model):
     status = models.CharField(max_length=30, choices=[("Not ready", "Not ready"),("Ready to hand", "Ready to hand"), 
                                                       ("Waiting for courier", "Waiting for courier"), ("In progress", "In progress"), ("Delivered", "Delivered")])
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null=True)
-    trusty = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null = True, related_name='trusty')
     
     def __str__(self):
         return str(self.order_id)
