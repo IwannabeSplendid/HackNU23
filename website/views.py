@@ -106,7 +106,6 @@ def payment(request, order_id):
         
         temp = {'company_name': company.company_name, 'company_cost': company_cost, 'company_available': company_available}
         com_data.append(temp)
-    print(com_data)
     data = {'dep_name': order.department.dep_name,
             'address': order.address, 
             'companies' : com_data,
@@ -117,6 +116,8 @@ def payment(request, order_id):
         return 0 
     
     return render(request, 'payment.html', data)
+def proceed_payment(request, order_id):
+    return render(request, 'payment2.html')
 
 @login_required
 def courier_page(request, username):
@@ -223,3 +224,4 @@ def get_client_info(iin):
 
 def capitalizeFirstLetter(string):
     return string[0]+ string[1:].lower();
+

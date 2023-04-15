@@ -28,6 +28,7 @@ urlpatterns = [
     path('order/<int:order_id>', website.construct_order, name='order'),
     path('order/<int:order_id>/payment', website.payment, name='payment'),
     path('courier/<str:username>', website.courier_page, name='courier'),
+     path('order/<int:order_id>/proceed_payment', website.proceed_payment, name='proceed_payment'),
     path('logout/', website.logout, name='logout'),
 ]
 if settings.DEBUG:
