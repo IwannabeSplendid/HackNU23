@@ -8,17 +8,20 @@
 </head>
 <body>
     <div class = "header">
-        <input type = "button" value = "Track" class = "header_track">
-        <input type = "button" value = "Log in" class = "header_login">
+        <p class = "contact">1414</p>
+        <p class = "contact_call">+7-7172-906-984</p>
+        <input type = "button" value = "Отследить" class = "header_track">
+        <input type = "button" value = "Войти" class = "header_login">
     </div>
     <div class = "track_form">
+        <p>Отследите свой документ</p>
         <form method = "post">
             {% csrf_token %}
             <div>
-                <input type = "text" class = "" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
+                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
                 <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
             </div>
-            <input type = "submit" value = "Отследить документ" class = "track_form_button">
+            <input type = "submit" value = "Отследить" class = "track_form_button">
         </form> 
     </div>
 </body>
