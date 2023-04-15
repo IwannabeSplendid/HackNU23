@@ -15,69 +15,49 @@
     </div>
     <div class = "main_block">
     <div class = "all_text">
-        <p class = "main">Здравствуйте, {{ client_first_name }}!</p>
-        <div class = "text_except_title">    
-            <p class = "service">Услуга: {{ order_description }}.</p>
-            <p class = "sector">Отделение: {{ order_department }}</p>
-            <p class = "main_2">Данные получателя</p>
-            <p class = "initials">{{ client_first_name }} {{ client_last_name }} </p>
-            <p class = "phone">Номер телефона: {{ client_phone_number }}</p>
+        <p class = "main"><em><strong>Здравствуйте, {{ client_first_name }}!</strong></em></p>
+        <div class = "text_except_title">
+            <p class = "initials"><strong>ФИО:</strong> {{ client_first_name }} {{ client_last_name }} </p>
+            <p class = "phone"><strong>Номер телефона:</strong> {{ client_phone_number }}</p>    
+            <p class = "service"><strong>Услуга:</strong> {{ order_description }}.</p>
+            <p class = "sector"><strong>Отделение:</strong> {{ order_department }}</p>
+            
         </div>
     </div>
     <form method = "post">
         <div class = "track_form">
             {% csrf_token %}
-            <p class = "main_sub">Документ по заказу {{ order_id }} готов к отправке:</p>
-                <select id="region" name="region" class = "region">
-                    <option value="" selected disabled hidden>Выберите область</option>
-                    <option value="Область Абай">Область Абай</option>
-                    <option value="Акмолинская область">Акмолинская область</option>
-                    <option value="Актюбинская область">Актюбинская область</option>
-                    <option value="Актюбинская область">Актюбинская область</option>
-                    <option value="Атырауская область">Атырауская область</option>
-                    <option value="Восточно-Казахстанская область">Восточно-Казахстанская область</option>
-                    <option value="Жамбылская область">Жамбылская область</option>
-                    <option value="Область Ұлытау">Область Ұлытау</option>
-                    <option value="Область Жетісу">Область Жетісу</option>
-                    <option value="Западно-Казахстанская область">Западно-Казахстанская область</option>
-                    <option value="Карагандинская область">Карагандинская область</option>
-                    <option value="Костанайская область">Костанайская область</option>
-                    <option value="Кызылординская область">Кызылординская область</option>
-                    <option value="Мангистауская область">Мангистауская область</option>
-                    <option value="Павлодарская область">Павлодарская область</option>
-                    <option value="Северо-Казахстанская область">Северо-Казахстанская область</option>
-                    <option value="Туркестанская область">Туркестанская область</option>
-                </select>
+            <p class = "main_sub"><em><strong>Ваш документ по заказу {{ order_id }} готов к отправке:</strong></em></p>
                 <div class = "all_inputs">
                     <div class = "inputs_short">
-                        <label class="full-field">
-                            <!-- Avoid the word "address" in id, name, or label text to avoid browser autofill from conflicting with Place Autocomplete. Star or comment bug https://crbug.com/587466 to request Chromium to honor autocomplete="off" attribute. -->
-                            <span class="form-label">Deliver to</span>
-                            <input
-                              id="ship-address"
-                              name="ship-address"
-                              required
-                              autocomplete="off"
-                            />
-                          </label>
+                        <label class = "full-field">
+                            <input class = "autoaddress" id = "ship-address" name = "ship-address" required autocomplete = "off" placeholder="Адрес для автозаполнения (опционально)"/>
+                        </label><br>
+                        <input type = "text" id = "region" name = "region" placeholder = "Область"><span></span>
                         <input type = "text" id = "city" name = "city" placeholder = "Город"><span></span>
                         <input type = "text" class = "street" id = "street" name = "street" placeholder = "Улица"><span></span>
-                        <input type = "text" id = "house" name = "house" placeholder = "Номер дома"><span></span><br>
+                        <input type = "text" id = "house" name = "house" placeholder = "Номер дома"><span></span>
                         <input type = "text" class = "apartment" id = "apartment" name = "apartment" placeholder = "Квартира"><span></span>
-                        <input type = "text" id = "order_number" name = "order_number" placeholder = "Подъезд">
-                        <input type = "text" class = "floor" id = "floor" name = "floor" placeholder = "Этаж"><br>
+                        <input type = "text" id = "order_number" name = "order_number" placeholder = "Подъезд"><br>
+                        <input type = "text" class = "floor" id = "floor" name = "floor" placeholder = "Этаж">
                         <input type = "text" id = "corpus" name = "corpus" placeholder = "Корпус">
-                        <input type = "text" id = "zk_name" name = "zk_name" placeholder = "Наименование ЖК">
-                        <input type = "text" id = "trustee" name = "trustee" placeholder = "Доверенное лицо"><br>
+                        <input type = "text" id = "zk_name" name = "zk_name" placeholder = "Наименование ЖК"><br>
+                        <div class = "checkbox_container2">
+                            <label class="c_3">Вместо меня документ примет доверенное лицо
+                                <input type = "checkbox" class = "password_toggle" onchange="document.getElementById('trustee').disabled = !this.checked;">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <input type = "text" class = "trustee" disabled = "true" id = "trustee" name = "trustee" placeholder = "ИИН доверенного лица"><br>
                     </div>
                     <input class = "extra" type = "text" id = "extra" name = "extra" placeholder = "Дополнительная информация"><br>
                 </div>
                 <div class = "checkbox_container">
-                    <label class="c_1">Я принимаю условия публичного договора-оферты (добавить графу с возможностью для клиента проставления галочки, при нажатии на публичного договора-оферты (для теста можно что угодно) переводить на данный договор)
+                    <label class="c_1">Я принимаю условия публичного договора-оферты.
                         <input type = "checkbox" class = "password_toggle">
                         <span class="checkmark"></span>
                     </label>
-                    <label class="c_2">Я ознакомлен и согласен с условиями политики конфиденциальности и персональных данных (добавить графу с возможностью для клиента проставления галочки, при нажатии на условиями политики конфиденциальности и персональных данных (для теста можно что угодно) переводить на данные условия)
+                    <label class="c_2">Я ознакомлен и согласен с условиями политики конфиденциальности и персональных данных.
                         <input type = "checkbox" class = "password_toggle">
                         <span class="checkmark"></span>
                     </label>
@@ -99,7 +79,10 @@
           fields: ["address_components", "geometry"],
           types: ["address"],
         });
+<<<<<<< Updated upstream
         
+=======
+>>>>>>> Stashed changes
         autocomplete.addListener('place_changed', function fillInAddress() {
             // Get the place details from the autocomplete object.
             const place = autocomplete.getPlace();
@@ -135,9 +118,6 @@
                   document.querySelector("#region").value = component.short_name;
                   break;
                 }
-                {% comment %} case "country":
-                  document.querySelector("#country").value = component.long_name;
-                  break; {% endcomment %}
               }
             }
           
