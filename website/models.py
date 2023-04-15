@@ -39,6 +39,7 @@ class Courier(models.Model):
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=[("A", "Available"),("B", "Busy handling a package")])
     rating = models.IntegerField() # 1-5
+    photo = models.ImageField(upload_to='images', blank=True, null=True)
     
     def __str__(self):
         return self.first_name
@@ -73,6 +74,7 @@ class Order(models.Model):
     status = models.CharField(max_length=30, choices=[("Not ready", "Not ready"),("Ready to hand", "Ready to hand"), 
                                                       ("Waiting for courier", "Waiting for courier"), ("In progress", "In progress"), ("Delivered", "Delivered")])
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null=True)
+    date = models.DateField(blank = True, null = True)
     
     def __str__(self):
         return str(self.order_id)
