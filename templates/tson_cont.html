@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="tson_cont_style.css">
+<title>Tson POV Cont</title>
+</head>
+<body>
+    <div class = "header">
+        <p class = "Department">Отделение | Адрес отделения</p>
+        <p class = "Employee_name">ЦОН Еговович</p>
+        <input type = "button" value = "Выйти" class = "header_logout">
+    </div>
+
+    <div class = "common">
+        <div class = "info_on_order">
+            <h3>Документ №004586235412</h3>
+            <p>ФИО клиента: </p>
+            <p>ФИО доверенного лица: </p>
+            <p>Название госуслуги: </p>
+            <p>Время оформления доставки: </p>
+            <button class="goBackOrders">Выбрать другой документ</button></td>
+        </div>
+        <div class = "info_on_courier">
+            <h3>Курьер: </h3>
+            <p>ФИО курьера: </p>
+            <p>Компания: </p>
+            <div class = "track_form">
+                <p>Подвердите курьера</p>
+                <form method = "post">
+                    <div>
+                        <input type = "text" class = "enter_code" name = "code" placeholder = "Введите код с СМС курьера"><br>
+                    </div>
+                    <input type = "submit" value = "Подвердить" class = "code_submit_button">
+                </form> 
+            </div>
+        </div>
+    </div>
+</body>
+</html>

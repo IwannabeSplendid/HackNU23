@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    background-color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.header {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #44d22e;
+}
+
+.Department {
+    margin-top: 15px;
+    font-size: 15px;
+    position: absolute;
+    left: 20px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+.Employee_name {
+    
+    font-size: 16px;
+    position: absolute;
+    right: 140px;
+    height: 100%;
+    color: #dde0e4;
+    padding: 0;
+    font-weight: bold;
+	text-decoration: underline;
+}
+.header input { 
+    font-size: 18px;
+    transition: 0.2s;
+    position: absolute;
+    height: 100%;
+    text-decoration: none;
+    color: #f5f8fc;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: #44d22e;
+}
+
+.header input:hover {
+    background-color: #3dbd2a;
+    transition: 0.2s;
+}
+
+.header_logout {
+    top: 0;
+    right: 50px;
+    width: 90px;
+}
+
+.department_info {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #F8F8F8;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.department_details {
+    margin-left: 20px;
+  }
+  
+.employee_greeting {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+.order_table {
+    margin-top: 50px;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    font-size: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+.order_table th {
+    text-align: left;
+    background-color: #f0f0f0;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+  }
+  
+.order_table td {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+  }
+  
+.order_table tr:nth-child(2n) {
+    background-color: #f9f9f9;
+}
+.decline-btn {
+    background-color: #3dbd2a;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .decline-btn:hover {
+    background-color: #38ac26;
+  }

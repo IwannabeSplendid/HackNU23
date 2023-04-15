@@ -1,0 +1,30 @@
+!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="tson_style.css">
+    <title>Tson POV</title>
+    </head>
+<body>
+    <div class = "header">
+        <p class = "Department">Отделение | Адрес отделения</p>
+        <p class = "Employee_name">ЦОН Еговович</p>
+        <input type = "button" value = "Выйти" class = "header_logout">
+    </div>
+    <table class="order_table">
+        <tr>
+            <th>ФИО Клиента (или доверенного лица)</th>
+            <th>Название госуслуги</th>
+            <th>Время оформления заказа на доставку</th>
+            <th></th>
+        </tr>
+        {% for company in companies %}
+        <tr>
+            <th>{{ company.name }}</th>
+            <th>{{ company.cost }}</th>
+            <th>{{ company.business }}</th>
+            <td><button class="decline-btn">Выдать</button></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
