@@ -4,7 +4,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{% static 'client_style.css' %}">
-<title>Track</title>
+<title>Order</title>
 </head>
 <body>
     <div class = "header">
@@ -13,17 +13,21 @@
         <input type = "button" value = "Отследить" class = "header_track">
         <a href = "/login"></a><input type = "button" value = "Войти" class = "header_login"></a>
     </div>
-    <p class = "main">Здравстуйте, {{ client_first_name }}! Документ по заказу {{ order_id }} готов к отправлению.</p>
-    <p class = "service">Услуга: {{ order_description }}.</p>
-    <p class = "sector">Отделение: {{ order_department }}</p>
-    <p class = "main_2">Данные получателя</p>
-    <p class = "initials">{{ client_first_name }} {{ client_last_name }} </p>
-    <p class = "phone">Номер телефона: {{ client_phone_number }}</p>
-    <p  class = "main_3">Для оформления доставки заполните следующие данные:</p>
+    <div class = "main_block">
+    <div class = "all_text">
+        <p class = "main">Здравствуйте, {{ client_first_name }}!</p>
+        <div class = "text_except_title">    
+            <p class = "service">Услуга: {{ order_description }}.</p>
+            <p class = "sector">Отделение: {{ order_department }}</p>
+            <p class = "main_2">Данные получателя</p>
+            <p class = "initials">{{ client_first_name }} {{ client_last_name }} </p>
+            <p class = "phone">Номер телефона: {{ client_phone_number }}</p>
+        </div>
+    </div>
     <form method = "post">
-    <div class = "track_form">
+        <div class = "track_form">
             {% csrf_token %}
-            <div>
+            <p class = "main_sub">Документ по заказу {{ order_id }} готов к отправке:</p>
                 <select id="region" name="region" class = "region">
                     <option value="" selected disabled hidden>Выберите область</option>
                     <option value="Область Абай">Область Абай</option>
@@ -43,17 +47,21 @@
                     <option value="Павлодарская область">Павлодарская область</option>
                     <option value="Северо-Казахстанская область">Северо-Казахстанская область</option>
                     <option value="Туркестанская область">Туркестанская область</option>
-                </select><br>
-                <input type = "text" id = "city" name = "city" placeholder = "Город">
-                <input type = "text" class = "street" id = "street" name = "street" placeholder = "Улица"><br>
-                <input type = "text" id = "house" name = "house" placeholder = "Номер дома">
-                <input type = "text" class = "apartment" id = "apartment" name = "apartment" placeholder = "Квартира"><br>
-                <input type = "text" id = "order_number" name = "order_number" placeholder = "Подъезд">
-                <input type = "text" class = "floor" id = "floor" name = "floor" placeholder = "Этаж"><br>
-                <input type = "text" id = "corpus" name = "corpus" placeholder = "Корпус">
-                <input type = "text" id = "zk_name" name = "zk_name" placeholder = "Наименование ЖК"><br>
-                <input type = "text" id = "trustee" name = "trustee" placeholder = "Доверенное лицо">
-                <textarea name="extra" form="usrform" placeholder = "Дополнительная информация"></textarea>
+                </select>
+                <div class = "all_inputs">
+                    <div class = "inputs_short">
+                        <input type = "text" id = "city" name = "city" placeholder = "Город"><span></span>
+                        <input type = "text" class = "street" id = "street" name = "street" placeholder = "Улица"><span></span>
+                        <input type = "text" id = "house" name = "house" placeholder = "Номер дома"><span></span><br>
+                        <input type = "text" class = "apartment" id = "apartment" name = "apartment" placeholder = "Квартира"><span></span>
+                        <input type = "text" id = "order_number" name = "order_number" placeholder = "Подъезд">
+                        <input type = "text" class = "floor" id = "floor" name = "floor" placeholder = "Этаж"><br>
+                        <input type = "text" id = "corpus" name = "corpus" placeholder = "Корпус">
+                        <input type = "text" id = "zk_name" name = "zk_name" placeholder = "Наименование ЖК">
+                        <input type = "text" id = "trustee" name = "trustee" placeholder = "Доверенное лицо"><br>
+                    </div>
+                    <input class = "extra" type = "text" id = "extra" name = "extra" placeholder = "Дополнительная информация"><br>
+                </div>
                 <div class = "checkbox_container">
                     <label class="c_1">Я принимаю условия публичного договора-оферты (добавить графу с возможностью для клиента проставления галочки, при нажатии на публичного договора-оферты (для теста можно что угодно) переводить на данный договор)
                         <input type = "checkbox" class = "password_toggle">
@@ -64,9 +72,9 @@
                         <span class="checkmark"></span>
                     </label>
                 </div>
-            </div>
             <input type = "submit" value = "Заказать доставку" class = "track_form_button">
-        </form> 
+        </div>
+    </form> 
     </div>
 </body>
 </html>

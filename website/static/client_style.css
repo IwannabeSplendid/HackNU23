@@ -65,14 +65,14 @@ body {
 }
 
 .track_form {
-    position: relative;
-    top: 200px;
-    width: 1000px;
-    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 700px;
+    height: 550px;
+    border-radius: 0 5px 5px 0;
     background-color: #c0c7ff;
-    margin: 0 auto;
     color: #f4f9ff;
-    text-align: center;
 }
 
 .track_form p {
@@ -80,14 +80,18 @@ body {
     position: relative;
     top: 0;
     left: 0;
-    text-align: left;
     font-size: 16px;
     color: #ffffff;
 }
 
-.track_form input {
+.all_inputs {
+    text-align: center;
+}
+
+.inputs_short input {
     font-size: 16px;
-    padding: 5px;
+    margin: 10px;
+    padding: 5px 10px;
     width: 200px;
     margin-bottom: 15px;
     box-sizing: border-box;
@@ -104,8 +108,11 @@ body {
 }
 
 .track_form_button {
+    position: absolute;
+    right: 25px !important;
     transition: 0.2s;
-    margin-top: 0;
+    margin-top: 115px;
+    font-size: 20px;
     height: 50px;
     border: none;
     color: #ffffff;
@@ -125,10 +132,7 @@ body {
 
 .checkbox_container {
     color: #fff;
-    text-align: center;
     display: block;
-    padding-top: 0;
-    padding-left: 40px;
     margin-bottom: 12px;
     cursor: pointer;
     font-size: 14px;
@@ -140,14 +144,18 @@ body {
 
   .c_1 {
     position: absolute;
-    top: 500px;
+    padding: 0 25px 0 50px;
+    top: 355px;
     left: 0;
+    font-size: 12px;
   }
 
   .c_2 {
     position: absolute;
-    top: 550px;
+    padding: 0 25px 0 50px;
+    top: 410px;
     left: 0;
+    font-size: 12px;
   }
   
   /* Hide the browser's default checkbox */
@@ -163,7 +171,7 @@ body {
   .checkmark {
     position: absolute;
     top: 0;
-    left: 20px;
+    left: 25px;
     height: 15px;
     width: 15px;
     background-color: #fff;
@@ -205,28 +213,86 @@ body {
     transform: rotate(45deg);
   }
 
-.main {
+.all_text {
+    background-color: #a2adff;
+    color: #f4f9ff;
+    padding: 0;
+    margin: 0;
     position: absolute;
-    top: 100px;
-    left: 20px;
-    color: black;
-    font-size: 24px;
+    border-radius: 5px 0 0 5px;
+    width: 405px;
+    left: 0;
+    height: 550px;
+}
+
+.text_except_title {
+    margin: 0 0 0 20px;
+}
+
+.main {
+    font-size: 25px;
+}
+
+.main_sub {
+    padding: 20px;
+    font-size: 20px !important;
+    background-color: #8492ff;
+    border-radius: 0 5px 0 0;
 }
 
 .service {
-    position: absolute;
-    top: 150px;
-    left: 20px;
-    color: black;
-    font-size: 24px;
+    font-size: 18px;
+}
+
+.sector {
+    font-size: 18px;
+}
+
+.main_2 {
+    font-size: 22px;
+}
+
+.initials {
+    font-size: 18px;
+}
+
+.phone {
+    font-size: 18px;
+}
+
+.main_3 {
+    font-size: 22px;
 }
 
 .region {
+    appearance: none;
+    padding: 5px 10px;
     font-size: 16px;
     width: 200px;
+    margin: 30px 0 15px 25px;
+    box-sizing: border-box;
+    border: 0px;
+    height: 30px;
+    border-radius: 2px;
+    background: #fff;
+    color: #a3aad7
+}
+
+.extra {
+    font-size: 16px;
+    margin: 10px;
+    padding: 5px 10px;
+    width: 650px;
     margin-bottom: 15px;
     box-sizing: border-box;
     border: 0px;
-    height: 20px;
     border-radius: 2px;
+}
+
+.main_block {
+    position: relative;
+    top: 150px;
+    margin: 0 auto;
+    width: 1100px;
+    height: 550px;
 }

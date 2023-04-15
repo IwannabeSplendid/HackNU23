@@ -4,7 +4,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{% static 'payment_style.css' %}">
-<title>Track</title>
+<title>Payment</title>
 </head>
 <body>
     <div class = "header">
@@ -29,6 +29,7 @@
                 <th>{{ company.business }}</th>
             </tr>
             {% endfor %}
+        </table>
         <form method = "post">
             {% csrf_token %}
             <div>
