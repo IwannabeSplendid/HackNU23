@@ -31,6 +31,7 @@ def home(request):
    
     return render(request, 'home.html')
 
+
 def construct_order(request, order_id):
     order = Order.objects.get(order_id = order_id)
     data = {'order_id': order.order_id, 
@@ -39,7 +40,7 @@ def construct_order(request, order_id):
                     'client_iin': order.client.IIN,
                     'client_first_name': capitalizeFirstLetter(order.client.first_name),
                     'client_last_name': capitalizeFirstLetter(order.client.last_name),
-                    'client_phone_number': order.client.phone_number,
+                    'client_phone_number': '+' + order.client.phone_number,
                     }
     
     if request.method == "POST":
