@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'payment_style.css' %}">
+<title>Track</title>
+</head>
+<body>
+    <div class = "header">
+        <p class = "contact">1414</p>
+        <p class = "contact_call">+7-7172-906-984</p>
+        <input type = "button" value = "Отследить" class = "header_track">
+        <a href="{% url 'login' %}"></a><input type = "button" value = "Войти" class = "header_login"></a>
+    </div>
+    <div class = "track_form">
+        <p class "sector">Отделение: {{  }}</p><br>
+        <p class "sector">Адрес доставки: {{  }}</p>
+        <form method = "post">
+            {% csrf_token %}
+            <div>
+                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
+                <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
+            </div>
+            <input type = "submit" value = "Отследить" class = "track_form_button">
+        </form> 
+    </div>
+</body>
+</html>

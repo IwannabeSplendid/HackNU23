@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    background-color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.header {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #8492ff;
+}
+
+.contact {
+    margin-top: 18px;
+    font-size: 15px;
+    position: absolute;
+    left: 20px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+
+.contact_call {
+    margin-top: 18px;
+    font-size: 15px;
+    position: absolute;
+    left: 70px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+
+.header input { 
+    font-size: 18px;
+    transition: 0.2s;
+    position: absolute;
+    height: 100%;
+    text-decoration: none;
+    color: #f5f8fc;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: #8492ff;
+}
+
+.header input:hover {
+    background-color: #7b8aff;
+    transition: 0.2s;
+}
+
+.header_track {
+    top: 0;
+    right: 140px;
+    width: 125px;
+}
+
+.header_login {
+    top: 0;
+    right: 50px;
+    width: 90px;
+}
+
+.track_form {
+    position: relative;
+    top: 200px;
+    width: 800px;
+    border-radius: 5px;
+    background-color: #c0c7ff;
+    margin: 0 auto;
+    color: #f4f9ff;
+    text-align: center;
+}
+
+.track_form p {
+    margin: 0;
+    padding: 12px 0 12px 20px;
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align: left;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #8492ff;
+    border-radius: 5px 5px 0 0;
+}
+
+.track_form input {
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    width: 570px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 0px;
+    border-radius: 2px;
+}
+
+.enteriin {
+    margin-top: 15px;
+}
+
+::placeholder {
+    color: #a3aad7;
+}
+
+.track_form_button {
+    transition: 0.2s;
+    margin-top: 0;
+    height: 50px;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px 10px 20px;
+    background-color: #8492ff;
+    border-radius: 2px;
+}
+
+.track_form_button:hover {
+    transition: 0.2s;
+    background-color: #7b8aff;
+}
