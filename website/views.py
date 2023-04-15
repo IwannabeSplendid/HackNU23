@@ -17,44 +17,51 @@ def home(request):
         
         token = get_token()
         url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
-        client_info = requests.get(url, headers={'authorization': 'Bearer ' + token})
-
-        
-        return client_info
+        client_info = requests.get(url, headers = {'authorization': 'Bearer ' + token}).json()
+        return JsonResponse(client_info)
     
     return render(request, 'home.html')
 
+
+
 def get_token():
     url = 'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token'
-    myobj = {'username': 'test-operator', 'password' : 'DjrsmA9RMXRl', 'client_id' : 'cw-queue-service', 'grant_type' : 'password'}
-
-    token = requests.post(url, json = myobj)
+    data = {'username': 'test-operator', 'password' : 'DjrsmA9RMXRl', 'client_id' : 'cw-queue-service', 'grant_type' : 'password'}
     
-    return token.text
+    token = requests.post(url, data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
+    
+    return token.json()['access_token']
 
 
-def login_view(request):
+def login(request):
 
     #when submitted (button clicked)
-    if request.method == "POST":
+    # if request.method == "POST":
 
-        #authenticate user
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username = username, password = password)
+    #     #authenticate user
+    #     username = request.POST['username']
+    #     password = request.POST['password']
+    #     user = authenticate(request, username = username, password = password)
         
-        #redirect to their pages
-        if user is not None: 
-            login(request, user)
+    #     #redirect to their pages
+    #     if user is not None: 
+    #         login(request, user)
 
-            return HttpResponseRedirect(reverse('personal'))
-        else:
-            return render(request, 'users/login.html', {
-                'message': 'Invalid credentials'
-            })
+    #         return HttpResponseRedirect(reverse('personal'))
+    #     else:
+    #         return render(request, 'users/login.html', {
+    #             'message': 'Invalid credentials'
+    #         })
+    return render(request, 'login.html')
             
-# def index(request):
-#     return render(request, 'index.html')
+def send_sms(phone_number, message):
+    token = get_token()
+    url = 'http://hakaton-sms.gov4c.kz/api/smsgateway/send'
+    data = {"phone" : phone_number, "smsText" : message}
+
+    x = requests.post(url, headers = {'authorization': 'Bearer ' + token, 'Content-Type' : 'application/json'}).json()
+    
+    
 
 # def index(request):
 #     return render(request, 'index.html')

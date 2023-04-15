@@ -20,4 +20,5 @@ from website import views as website
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', website.home, name='home'),
+    path('login/', website.login, name='login'),
 ]
