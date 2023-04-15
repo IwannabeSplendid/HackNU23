@@ -39,24 +39,22 @@ def get_token():
 
 
 def login(request):
-
     #when submitted (button clicked)
-    # if request.method == "POST":
-
-    #     #authenticate user
-    #     username = request.POST['username']
-    #     password = request.POST['password']
-    #     user = authenticate(request, username = username, password = password)
+    if request.method == "POST":
+        #authenticate user
+        iin = request.POST['iin']
+        password = request.POST['password']
+        user = authenticate(request, username = iin, password = password)
         
-    #     #redirect to their pages
-    #     if user is not None: 
-    #         login(request, user)
+        #redirect to their pages
+        if user is not None: 
+            login(request, user)
 
-    #         return HttpResponseRedirect(reverse('personal'))
-    #     else:
-    #         return render(request, 'users/login.html', {
-    #             'message': 'Invalid credentials'
-    #         })
+            return HttpResponseRedirect(reverse('personal'))
+        else:
+            return render(request, 'users/login.html', {
+                'message': 'Invalid credentials'
+            })
     return render(request, 'login.html')
             
 def send_sms(phone_number, message):

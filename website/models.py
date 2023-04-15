@@ -48,6 +48,7 @@ class Client(models.Model):
 
 class Order(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    order_id = models.IntegerField(unique=True, default=0)
     courier = models.ForeignKey(Courier, on_delete=models.SET_NULL, blank = True, null = True)
     description = models.TextField(max_length=50)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
