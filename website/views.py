@@ -12,7 +12,6 @@ import requests
 # track, login buttons 
 def home(request):
     # return to another page with order info
-    send_sms('77773378411', 'Hello')
     if request.method == "POST":
         iin = request.POST['iin']
         order_number = request.POST['order_number']
@@ -26,7 +25,14 @@ def home(request):
         order = Order.objects.get(order_id = order_number)
         print(order.client.IIN)
         if order.client.IIN == iin:
-            data = {'order_id': order.order_id, 
+            return HttpResponseRedirect(reverse('client'))
+            
+        return JsonResponse(client_info)
+   
+    return render(request, 'home.html')
+
+def construct_order(request, iin):
+    data = {'order_id': order.order_id, 
                     'order_description': order.description,
                     'order_department': order.department.dep_name,
                     'client_iin': order.client.IIN,
@@ -34,13 +40,7 @@ def home(request):
                     'client_last_name': order.client.last_name,
                     'client_phone_number': order.client.phone_number,
                     }
-            return render(request, 'order.html', data)
-            
-        return JsonResponse(client_info)
-   
-    return render(request, 'home.html')
-
-def construct_order(request, iin):
+    
     if request.method == "POST":
         iin = request.POST['iin']
         order_number = request.POST['order_number']
@@ -56,6 +56,9 @@ def construct_order(request, iin):
             return render(request, 'order.html', {'order': order})
             
         return JsonResponse(client_info)
+    
+    return render(request, 'client.html', data)
+
     
     return render(request, 'order.html')
 
@@ -94,11 +97,8 @@ def logout(request):
 def send_sms(phone_number, message):
     token = get_token()
     url = 'http://hak-sms123.gov4c.kz/api/smsgateway/send'
-    data = {"phone" : phone_number, "smsText" : message}
-    
-    x = requests.post(url, headers = {'authorization': 'Bearer ' + token}, data = data)
-    print(x.content)
-    
+    d = {'phone' : phone_number, 'smsText' : message}
+    requests.post(url, json = d, headers = {'Content-Type': 'application/json','Authorization': 'Bearer ' + token})
     
 
 def get_phone_number(iin):
@@ -112,6 +112,3 @@ def get_client_info(iin):
     url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
     client_info = requests.get(url, headers = {'authorization': 'Bearer ' + token}).json()
     return client_info
-
-# def index(request):
-#     return render(request, 'index.html')
