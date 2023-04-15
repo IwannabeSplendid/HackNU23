@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'client_style.css' %}">
 <title>Track</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
         <a href = "/login"></a><input type = "button" value = "Войти" class = "header_login"></a>
     </div>
     <div class = "track_form">
-        <p>Отследите свой документ</p>
+        <p>Здравстуйте, {{ first_name }}! Ваш заказ готов к получению</p>
         <form method = "post">
             {% csrf_token %}
             <div>
