@@ -16,6 +16,19 @@
     <div class = "track_form">
         <p class "sector">Отделение: {{  }}</p><br>
         <p class "sector">Адрес доставки: {{  }}</p>
+        <table>
+            <tr>
+                <th>Delivery company</th>
+                <th>Delivery cost</th>
+                <th>Activity status</th>
+            </tr>
+            {% for company in companies %}
+            <tr>
+                <th>{{ company.name }}</th>
+                <th>{{}}</th>
+                <th>{{ company.business }}</th>
+            </tr>
+            {% endfor %}
         <form method = "post">
             {% csrf_token %}
             <div>

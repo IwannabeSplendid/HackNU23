@@ -14,14 +14,14 @@
         <a href = "/login"></a><input type = "button" value = "Войти" class = "header_login"></a>
     </div>
     <p class = "main">Здравстуйте, {{ client_first_name }}! Документ по заказу {{ order_id }} готов к отправлению.</p>
+    <p class = "service">Услуга: {{ order_description }}.</p>
+    <p class = "sector">Отделение: {{ order_department }}</p>
+    <p class = "main_2">Данные получателя</p>
+    <p class = "initials">{{ client_first_name }} {{ client_last_name }} </p>
+    <p class = "phone">Номер телефона: {{ client_phone_number }}</p>
+    <p  class = "main_3">Для оформления доставки заполните следующие данные:</p>
+    <form method = "post">
     <div class = "track_form">
-        <p class = "service">Услуга: {{ order_description }}.</p>
-        <p class = "sector">Отделение: {{ order_department }}</p>
-        <p class = "main_2">Данные получателя</p>
-        <p class = "initials">{{ client_first_name }} {{ client_last_name }} </p>
-        <p class = "phone">Номер телефона: {{ client_phone_number }}</p>
-        <p  class = "main_3">Для оформления доставки заполните следующие данные:</p>
-        <form method = "post">
             {% csrf_token %}
             <div>
                 <select id="region" name="region" class = "region">
