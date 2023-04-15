@@ -15,7 +15,7 @@
 
     <div class = "courier_info">
         <div class = "courier_photo">
-            <img src="media/images/cr1.jpeg" alt="Profile Picture">
+            <img src="{{courier_photo.url}}" alt="Profile Picture">
         </div>
         <div class = "courier_details">
             <h2 class="courier_name"> {{courier_name}} </h2>
@@ -30,7 +30,12 @@
             </div>
         </div>
     </div>
-
+    {% if order == 0 %}
+        <div class = "new_order"> 
+            <h3>Новых заказов нет</h3>
+        </div>
+    {% endif %}
+    {% if order != 0 %}
 	<div class = "new_order"> 
 		<h3>Время оформления заказа: {{order_time}}</h3>
 		<h3>Номер заявки: {{order_id}}</h3>
@@ -45,5 +50,6 @@
             <button type="submit" name='accept' class="getCode-btn" >Получить код</button>
         </form>
 	</div>
+    {% endif %}
 </body>
 </html>

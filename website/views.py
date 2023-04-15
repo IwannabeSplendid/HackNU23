@@ -119,28 +119,38 @@ def payment(request, order_id):
     return render(request, 'payment.html', data)
 
 @login_required
-def courier_page(request, username, object_id_list = []):
+def courier_page(request, username):
     courier = Courier.objects.get(user__username = username)
-    orders = list(Order.objects.filter(~Q(order_id__in=object_id_list)))
-    order= random.choice(orders)
-    data = {'courier_name': courier.first_name + ' ' + courier.last_name,
+    declined = courier.declined_order.order_id if courier.declined_order else None
+    
+    orders = list(Order.objects.filter(~Q(order_id=declined)))
+    if len(orders) == 0:
+        data = {'courier_name': courier.first_name + ' ' + courier.last_name,
             'courier_company': courier.company_id.company_name,
             'courier_image': courier.photo,
             'courier_rating': courier.rating,
-            'order_time': order.date,
-            'order_address': order.address,
-            'order_id': order.order_id,
-            'order_department': order.department.dep_name,
-            'order_description': order.description,
-            'order_client': capitalizeFirstLetter(order.client.first_name) + ' ' + capitalizeFirstLetter(order.client.last_name),
-            'order_dep_address': order.department.address,
+            'order' : 0,
             }
+    else:
+        order= random.choice(orders)
+        data = {'courier_name': courier.first_name + ' ' + courier.last_name,
+                'courier_company': courier.company_id.company_name,
+                'courier_image': courier.photo,
+                'courier_rating': courier.rating,
+                'order_time': order.date,
+                'order_address': order.address,
+                'order_id': order.order_id,
+                'order_department': order.department.dep_name,
+                'order_description': order.description,
+                'order_client': capitalizeFirstLetter(order.client.first_name) + ' ' + capitalizeFirstLetter(order.client.last_name),
+                'order_dep_address': order.department.address,
+                'order' : 1,
+                }
     if request.method == "POST":
-        print(request.POST)
         if "decline" in request.POST:
-            object_id_list = [order.order_id]
-            return HttpResponseRedirect(reverse('courier', args=(username, object_id_list, )))
-    
+            courier.declined_order = order
+            courier.save()
+            return HttpResponseRedirect(reverse('courier', args=(username,)))
     return render(request, 'courier.html', data)
     
 
