@@ -18,12 +18,10 @@ def home(request):
         token = get_token()
         url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
         client_info = requests.get(url, headers = {'authorization': 'Bearer ' + token}).json()
-    #      first_name = models.CharField(max_length=30)
-    # last_name = models.CharField(max_length=30)
-    # IIN = models.IntegerField(unique=True)
-    # phone_number = models.CharField(max_length=15)
-    # address = models.ForeignKey(Address, on_delete=models.CASCADE)
-        client = Client(first_name = client_info['firstName'], last_name = client_info['lastName'], IIN = client_info['iin'])
+        iin = client_info['iin']
+        if not Client.objects.filter(IIN=iin).exists():
+            client = Client(first_name = client_info['firstName'], last_name = client_info['lastName'], IIN = client_info['iin'])
+            client.save()
         
         return JsonResponse(client_info)
     
