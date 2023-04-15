@@ -55,58 +55,54 @@ def construct_order(request, order_id):
         corpus = request.POST['corpus']
         zk_name = request.POST['zk_name']
         trustee = request.POST['trustee']
-        client = order.client
-        address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment, floor = floor, podezd = order_number, corpus = corpus, zk_name = zk_name, trustee = trustee)
-        client_info = get_client_info(iin)
-        phone = get_phone_number(iin)
-        if not Client.objects.filter(IIN=iin).exists():
-            client = Client(first_name = client_info['firstName'], last_name = client_info['lastName'], IIN = client_info['iin'], phone_number = phone)
-            client.save()
         
-        order = Order.objects.get(order_id = order_number)
-        print(order.client.IIN)
-        if order.client.IIN == iin:
-            return render(request, 'order.html', {'order': order})
-            
+        address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment, 
+                          floor = floor, podezd = order_number, corpus = corpus, zk_name = zk_name)
+        order.address =address
+        if Client.objects.filter(IIN=trustee).exists():
+            order.trustee = trustee
+        order.save()
+        order.client.address = address
+        order.client.save() 
         return redirect('payment', order_id = order_number)
     
     return render(request, 'client.html', data)
 
 def payment(request, order_id):
-    order = Order.objects.get(order_id = order_id)
+    # order = Order.objects.get(order_id = order_id)
 
-    gmaps = googlemaps.Client(key='AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
+    # gmaps = googlemaps.Client(key='AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
 
-    # Geocoding an address
-    geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+    # # Geocoding an address
+    # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
-    # Look up an address with reverse geocoding
-    reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
-
-    # Request directions via public transit
-    now = datetime.now()
-    directions_result = gmaps.directions("Sydney Town Hall",
-                                        "Parramatta, NSW",
-                                        mode="transit",
-                                        departure_time=now)
-
-    # Validate an address with address validation
-    addressvalidation_result =  gmaps.addressvalidation(['1600 Amphitheatre Pk'], 
-                                                        regionCode='US',
-                                                        locality='Mountain View', 
-                                                        enableUspsCass=True)
-    data = {'order_id': order.order_id, 
-                    'order_description': order.description,
-                    'order_department': order.department.dep_name,
-                    'client_iin': order.client.IIN,
-                    'client_first_name': order.client.first_name,
-                    'client_last_name': order.client.last_name,
-                    'client_phone_number': order.client.phone_number,
-                    }
+    # # # Look up an address with reverse geocoding
+    # # reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
     
-    if request.method == "POST":
-        #save
-        return 0 
+    # # Request directions via public transit
+    # now = datetime.now()
+    # directions_result = gmaps.directions("Sydney Town Hall",
+    #                                     "Parramatta, NSW",
+    #                                     mode="transit",
+    #                                     departure_time=now)
+
+    # # Validate an address with address validation
+    # addressvalidation_result =  gmaps.addressvalidation(['1600 Amphitheatre Pk'], 
+    #                                                     regionCode='US',
+    #                                                     locality='Mountain View', 
+    #                                                     enableUspsCass=True)
+    # data = {'order_id': order.order_id, 
+    #                 'order_description': order.description,
+    #                 'order_department': order.department.dep_name,
+    #                 'client_iin': order.client.IIN,
+    #                 'client_first_name': order.client.first_name,
+    #                 'client_last_name': order.client.last_name,
+    #                 'client_phone_number': order.client.phone_number,
+    #                 }
+    
+    # if request.method == "POST":
+    #     #save
+    #     return 0 
     
     return render(request, 'payment.html')
 
