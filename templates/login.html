@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="{% static 'login_style.css' %}">
+    <link rel="stylesheet" href="{% static login_style.css %}">
 <title>Log in</title>
 </head>
 <body>
@@ -19,7 +19,21 @@
             {% csrf_token %}
             <div>
                 <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
-                <input type = "text" id = "password" name = "password" placeholder = "Введите пароль"><br>
+                <input type = "password" id = "password" name = "password" placeholder = "Введите пароль"><br>
+                <label class="checkbox_container">Показать пароль
+                    <input type = "checkbox" class = "password_toggle" onclick = "showPassword()">
+                    <script>
+                        function showPassword() {
+                            var x = document.getElementById("password");
+                            if (x.type === "password") {
+                                x.type = "text";
+                            } else {
+                                x.type = "password";
+                            }   
+                        }
+                        </script>
+                    <span class="checkmark"></span>
+                </label>
             </div>
             <input type = "submit" value = "Войти" class = "login_form_button">
         </form> 

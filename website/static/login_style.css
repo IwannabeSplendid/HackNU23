@@ -108,7 +108,7 @@ body {
 
 .login_form_button {
     transition: 0.2s;
-    margin-top: 0;
+    margin-top: 30px;
     height: 50px;
     border: none;
     color: #ffffff;
@@ -125,3 +125,74 @@ body {
     transition: 0.2s;
     background-color: #7b8aff;
 }
+
+.checkbox_container {
+    color: #fff;
+    text-align: center;
+    display: block;
+    position: absolute;
+    padding-top: 0;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .checkbox_container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 2px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .checkbox_container:hover input ~ .checkmark {
+    background-color: #fff;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .checkbox_container input:checked ~ .checkmark {
+    background-color: #8492ff;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .checkbox_container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .checkbox_container .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 2px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
