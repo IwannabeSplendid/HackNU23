@@ -1,4 +1,24 @@
-<!DOCTYPE html>
+<html>
+<head>
+<title>A Simple Google Map</title>
+</head>
+
+<body>
+<h1>A Simple Google Map</h1>
+
+<div id="map" style="width:600px; height: 400px;"></div>
+{{address_lat}} {{address_lng}}
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10&libraries=places"></script>
+
+<script>
+	var map_parameters = { center: {lat: +"{{address_lat|stringformat:".2f" }}", lng: +"{{address_lng|stringformat:".2f" }}"}, zoom: 8 };
+    var map = new google.maps.Map(document.getElementById('map'), map_parameters);
+</script>
+</body>
+</html>
+
+{% comment %} <!DOCTYPE html>
 {% load static %}
 
 <html>
@@ -78,4 +98,4 @@
     </div>
     </div>
 </body>
-</html>
+</html> {% endcomment %}

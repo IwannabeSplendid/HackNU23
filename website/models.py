@@ -23,6 +23,7 @@ class Address(models.Model):
     floor = models.IntegerField(blank = True, null = True)
     zk_name = models.CharField(max_length=30, blank = True, null = True) # название ЖК
     add_info = models.TextField(blank = True, null = True)
+    full_name = models.CharField(max_length=50, blank = True, null = True)
     
     def __str__(self):
         return self.house_number + ", " + self.street_name + ", " + self.city + ", " + self.oblast

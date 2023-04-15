@@ -75,27 +75,7 @@ def construct_order(request, order_id):
 
 def payment(request, order_id):
     order = Order.objects.get(order_id = order_id)
-
-    gmaps = googlemaps.Client(key='AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
-
-    # Geocoding an address
-    geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
-
-    # # Look up an address with reverse geocoding
-    # reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
     
-    # Request directions via public transit
-    now = datetime.now()
-    directions_result = gmaps.directions("Sydney Town Hall",
-                                        "Parramatta, NSW",
-                                        mode="transit",
-                                        departure_time=now)
-
-    # Validate an address with address validation
-    addressvalidation_result =  gmaps.addressvalidation(['1600 Amphitheatre Pk'], 
-                                                        regionCode='US',
-                                                        locality='Mountain View', 
-                                                        enableUspsCass=True)
     cost = 1000
     com_data = []
     for company in Company.objects.all():
@@ -106,9 +86,16 @@ def payment(request, order_id):
         
         temp = {'company_name': company.company_name, 'company_cost': company_cost, 'company_available': company_available}
         com_data.append(temp)
+    
+    response = requests.get('https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJeRpOeF67j4AR9ydy_PIzPuM&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
+    resp_json_payload = response.json()
+    address_lat_lon = resp_json_payload['results'][0]['geometry']['location']
+    print(address_lat_lon)    
     data = {'dep_name': order.department.dep_name,
             'address': order.address, 
             'companies' : com_data,
+            'address_lat': address_lat_lon['lat'],
+            'address_lng': address_lat_lon['lng'],
                     }
     
     if request.method == "POST":
@@ -116,6 +103,7 @@ def payment(request, order_id):
         return 0 
     
     return render(request, 'payment.html', data)
+
 def proceed_payment(request, order_id):
     return render(request, 'payment2.html')
 
