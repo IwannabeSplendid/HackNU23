@@ -4,9 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 # User to login/logout 
 class User(AbstractUser):
-    first_name = models.CharField(max_length=30, null = True)
-    last_name = models.CharField(max_length=30, null = True)
-    IIN = models.IntegerField(unique=True, null = True)
     staff_type = models.CharField(max_length=10, choices=[("C", "Courier"),("E", "Employee")])
 
 class Company(models.Model):
@@ -28,12 +25,18 @@ class Department(models.Model):
 
 class Courier(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=30, null = True)
+    last_name = models.CharField(max_length=30, null = True)
+    IIN = models.IntegerField(unique=True, null = True)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=[("A", "Available"),("B", "Busy handling a package")])
     rating = models.IntegerField() # 1-5
 
 class Employee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=30, null = True)
+    last_name = models.CharField(max_length=30, null = True)
+    IIN = models.IntegerField(unique=True, null = True)
     department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=[("A", "Available"),("B", "Busy handling a package")])
 
@@ -51,3 +54,4 @@ class Order(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=[("Not ready", "Not ready"),("Ready to hand", "Ready to hand"), 
                                                       ("Waiting for courier", "Waiting for courier"), ("In progress", "In progress"), ("Delivered", "Delivered")])
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
