@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from .models import User, Courier, Employee, Client, Order, Address, Company, Department
-from django.contrib.auth import authenticate, login, logout
+from .models import Courier, Employee, Client, Order, Address, Company, Department
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 import requests
+import googlemaps
+from datetime import datetime
 
 # Home page view extends the index.html template
 # track, login buttons 
@@ -57,11 +58,33 @@ def construct_order(request, order_id):
         if order.client.IIN == iin:
             return render(request, 'order.html', {'order': order})
             
-        return JsonResponse(client_info)
+        return redirect('payment', order_id = order_number)
     
     return render(request, 'client.html', data)
 
-def payment(request, iin):
+def payment(request, order_id):
+    order = Order.objects.get(order_id = order_id)
+
+    gmaps = googlemaps.Client(key='AIzaSyDNttvAKiXJfCcj3HMoyRTip39IyO0AhNA')
+
+    # Geocoding an address
+    geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+
+    # Look up an address with reverse geocoding
+    reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
+
+    # Request directions via public transit
+    now = datetime.now()
+    directions_result = gmaps.directions("Sydney Town Hall",
+                                        "Parramatta, NSW",
+                                        mode="transit",
+                                        departure_time=now)
+
+    # Validate an address with address validation
+    addressvalidation_result =  gmaps.addressvalidation(['1600 Amphitheatre Pk'], 
+                                                        regionCode='US',
+                                                        locality='Mountain View', 
+                                                        enableUspsCass=True)
     data = {'order_id': order.order_id, 
                     'order_description': order.description,
                     'order_department': order.department.dep_name,
@@ -72,22 +95,10 @@ def payment(request, iin):
                     }
     
     if request.method == "POST":
-        iin = request.POST['iin']
-        order_number = request.POST['order_number']
-        client_info = get_client_info(iin)
-        phone = get_phone_number(iin)
-        if not Client.objects.filter(IIN=iin).exists():
-            client = Client(first_name = client_info['firstName'], last_name = client_info['lastName'], IIN = client_info['iin'], phone_number = phone)
-            client.save()
-        
-        order = Order.objects.get(order_id = order_number)
-        print(order.client.IIN)
-        if order.client.IIN == iin:
-            return render(request, 'order.html', {'order': order})
-            
-        return JsonResponse(client_info)
+        #save
+        return 0 
     
-    return render(request, 'client.html', data)
+    return render(request, 'payement.html')
 
 def get_token():
     url = 'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token'
