@@ -25,13 +25,42 @@ def home(request):
         order = Order.objects.get(order_id = order_number)
         print(order.client.IIN)
         if order.client.IIN == iin:
-            return HttpResponseRedirect(reverse('client'))
+            return redirect('order', order_id = order_number)
             
         return JsonResponse(client_info)
    
     return render(request, 'home.html')
 
-def construct_order(request, iin):
+def construct_order(request, order_id):
+    order = Order.objects.get(order_id = order_id)
+    data = {'order_id': order.order_id, 
+                    'order_description': order.description,
+                    'order_department': order.department.dep_name,
+                    'client_iin': order.client.IIN,
+                    'client_first_name': capitalizeFirstLetter(order.client.first_name),
+                    'client_last_name': capitalizeFirstLetter(order.client.last_name),
+                    'client_phone_number': order.client.phone_number,
+                    }
+    
+    if request.method == "POST":
+        iin = request.POST['iin']
+        order_number = request.POST['order_number']
+        client_info = get_client_info(iin)
+        phone = get_phone_number(iin)
+        if not Client.objects.filter(IIN=iin).exists():
+            client = Client(first_name = client_info['firstName'], last_name = client_info['lastName'], IIN = client_info['iin'], phone_number = phone)
+            client.save()
+        
+        order = Order.objects.get(order_id = order_number)
+        print(order.client.IIN)
+        if order.client.IIN == iin:
+            return render(request, 'order.html', {'order': order})
+            
+        return JsonResponse(client_info)
+    
+    return render(request, 'client.html', data)
+
+def payment(request, iin):
     data = {'order_id': order.order_id, 
                     'order_description': order.description,
                     'order_department': order.department.dep_name,
@@ -58,9 +87,6 @@ def construct_order(request, iin):
         return JsonResponse(client_info)
     
     return render(request, 'client.html', data)
-
-    
-    return render(request, 'order.html')
 
 def get_token():
     url = 'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token'
@@ -112,3 +138,6 @@ def get_client_info(iin):
     url = 'http://hakaton-fl.gov4c.kz/api/persons/' + iin
     client_info = requests.get(url, headers = {'authorization': 'Bearer ' + token}).json()
     return client_info
+
+def capitalizeFirstLetter(string):
+    return string[0]+ string[1:].lower();
