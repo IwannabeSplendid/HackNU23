@@ -14,10 +14,40 @@
         <a href = "/login"></a><input type = "button" value = "Войти" class = "header_login"></a>
     </div>
     <div class = "track_form">
-        <p>Здравстуйте, {{ first_name }}! Ваш заказ готов к получению</p>
+        <p>Здравстуйте, {{ client_first_name }}! Документ по заказу {{ order_id }} готов к отправлению, выберите способ доставки:</p>
+        <p>Услуга: {{ order_description }}</p>
+        <p>Отделение: {{ order_department }}</p>
+        <p>Данные получателя</p>
+        <p>{{ client_first_name }} {{ client_last_name }} </p>
+        <p>Номер телефона: {{ client_first_name }}</p>
+        <p>Данные получателя</p>
         <form method = "post">
             {% csrf_token %}
             <div>
+                <select id="country" name="country">
+                    <option value="abai">Область Абай</option>
+                    <option value="akmola">Акмолинская область</option>
+                    <option value="aktobe">Актюбинская область</option>
+                    <option value="almaty">Алматинская область</option>
+                    <option value="atyrau">Атырауская область</option>
+                    <option value="vostok">Восточно-Казахстанская область</option>
+                    <option value="zhambyl">Жамбылская область</option>
+                    <option value="ulytau">Область Ұлытау</option>
+                    <option value="zhetisu">Область Жетісу</option>
+                    <option value="zapad">Западно-Казахстанская область</option>
+                    <option value="karaganda">Карагандинская область</option>
+                    <option value="kostanay">Костанайская область</option>
+                    <option value="kyzylorda">Кызылординская область</option>
+                    <option value="mangystau">Мангистауская область</option>
+                    <option value="pavlodar">Павлодарская область</option>
+                    <option value="sever">Северо-Казахстанская область</option>
+                    <option value="turkestan">Туркестанская область</option>
+                    </select>
+                <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
+                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
+                <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
+                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
+                <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
                 <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите ИИН"><br>
                 <input type = "text" id = "order_number" name = "order_number" placeholder = "Введите номер услуги"><br>
             </div>
