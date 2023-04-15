@@ -72,42 +72,49 @@ def construct_order(request, order_id):
     return render(request, 'client.html', data)
 
 def payment(request, order_id):
-    # order = Order.objects.get(order_id = order_id)
+    order = Order.objects.get(order_id = order_id)
 
-    # gmaps = googlemaps.Client(key='AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
+    gmaps = googlemaps.Client(key='AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
 
-    # # Geocoding an address
-    # geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+    # Geocoding an address
+    geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
-    # # # Look up an address with reverse geocoding
-    # # reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
+    # # Look up an address with reverse geocoding
+    # reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
     
-    # # Request directions via public transit
-    # now = datetime.now()
-    # directions_result = gmaps.directions("Sydney Town Hall",
-    #                                     "Parramatta, NSW",
-    #                                     mode="transit",
-    #                                     departure_time=now)
+    # Request directions via public transit
+    now = datetime.now()
+    directions_result = gmaps.directions("Sydney Town Hall",
+                                        "Parramatta, NSW",
+                                        mode="transit",
+                                        departure_time=now)
 
-    # # Validate an address with address validation
-    # addressvalidation_result =  gmaps.addressvalidation(['1600 Amphitheatre Pk'], 
-    #                                                     regionCode='US',
-    #                                                     locality='Mountain View', 
-    #                                                     enableUspsCass=True)
-    # data = {'order_id': order.order_id, 
-    #                 'order_description': order.description,
-    #                 'order_department': order.department.dep_name,
-    #                 'client_iin': order.client.IIN,
-    #                 'client_first_name': order.client.first_name,
-    #                 'client_last_name': order.client.last_name,
-    #                 'client_phone_number': order.client.phone_number,
-    #                 }
+    # Validate an address with address validation
+    addressvalidation_result =  gmaps.addressvalidation(['1600 Amphitheatre Pk'], 
+                                                        regionCode='US',
+                                                        locality='Mountain View', 
+                                                        enableUspsCass=True)
+    cost = 1000
+    com_data = []
+    for company in Company.objects.all():
+        all_couriers = len(Courier.objects.filter(company_id__company_name = company.company_name))
+        busy_couriers = len(Courier.objects.filter(company_id = company, status = "B"))
+        company_available = (all_couriers - busy_couriers) / all_couriers
+        company_cost = cost/company_available
+        
+        temp = {'company_name': company.company_name, 'company_cost': company_cost, 'company_available': company_available}
+        com_data.append(temp)
+    print(com_data)
+    data = {'dep_name': order.department.dep_name,
+            'address': order.address, 
+            'companies' : com_data,
+                    }
     
-    # if request.method == "POST":
-    #     #save
-    #     return 0 
+    if request.method == "POST":
+        #save
+        return 0 
     
-    return render(request, 'payment.html')
+    return render(request, 'payment.html', data)
 
 def get_token():
     url = 'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token'

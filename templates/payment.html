@@ -11,7 +11,7 @@
         <p class = "contact">1414</p>
         <p class = "contact_call">+7-7172-906-984</p>
         <input type = "button" value = "Отследить" class = "header_track">
-        <a href="{% url 'login' %}"></a><input type = "button" value = "Войти" class = "header_login"></a>
+        <a href="{% url 'login' %}"><input type = "button" value = "Войти" class = "header_login"></a>
     </div>
     <div class = "track_form">
         <p class "sector">Отделение: {{ dep_name }}</p><br>
@@ -22,11 +22,12 @@
                 <th>Delivery cost</th>
                 <th>Activity status</th>
             </tr>
+            
             {% for company in companies %}
             <tr>
-                <th>{{ company.name }}</th>
-                <th>{{ company.cost }}</th>
-                <th>{{ company.business }}</th>
+                <th>{{ company.company_name }}</th>
+                <th>{{ company.company_cost }}</th>
+                <th>{{ company.company_available }}</th>
             </tr>
             {% endfor %}
         </table>
