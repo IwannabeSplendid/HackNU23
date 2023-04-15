@@ -151,6 +151,19 @@ def courier_page(request, username):
             courier.declined_order = order
             courier.save()
             return HttpResponseRedirect(reverse('courier', args=(username,)))
+        elif "accept" in request.POST:
+            courier.status = "B"
+            courier.save()
+            order.status = "Waiting for courier"
+            order.save()
+            return render(request, 'courier_continue.html', data)
+        elif "get_code" in request.POST:
+            code = random.randrange(1000, 9999)
+            phone = get_phone_number(courier.user.IIN)
+            send_sms(phone, code)
+            
+            return render(request, 'courier_continue.html', data)
+        
     return render(request, 'courier.html', data)
     
 

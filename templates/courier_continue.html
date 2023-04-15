@@ -1,42 +1,47 @@
+{%load static%}
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="courier_continue.css">
+        <link rel="stylesheet" href="{% static 'courier_continue.css' %}">
     <title>Track</title>
     </head>
 <body>
     <div class = "header">
-        <p class = "Company">Company name</p>
-        <p class = "Courier_name">Акжан Фамилия</p>
-        <input type = "button" value = "Выйти" class = "header_logout">
+        <p class = "Company">{{courier_company}}</p>
+        <p class = "Courier_name">{{courier_name}}</p>
+        <a href="{% url 'logout' %}"> <input type = "button" value = "Выйти" class = "header_logout"></a>
     </div>
 
     <div class = "courier_info">
         <div class = "courier_photo">
-            <img src = "courier.jpg" alt = "Courier Photo">
+            <img src="{{courier_photo.url}}" alt="Profile Picture">
         </div>
         <div class = "courier_details">
-            <h2 class="courier_name">Aкжан Фамилия</h2>
-            <p class="company_name">Company Name</p>
-            <p class="order_count">Заказов всего: </p>
+            <h2 class="courier_name"> {{courier_name}} </h2>
+            <p class="company_name"> {{courier_company}} </p>
             <div class ="rating">
                 <span class="star">&#9733;</span>
                 <span class="star">&#9733;</span>
                 <span class="star">&#9733;</span>
                 <span class="star">&#9733;</span>
                 <span class="star">&#9733;</span>
-                <span class="rating_number">4.8</span>
+                <span class="rating_number">{{ courier_rating}}</span>
             </div>
         </div>
     </div>
 
 	<div class = "new_order"> 
-        <h2>Текущий заказ:</h2>
-		<h3>Номер заявки:</h3>
-		<h3>ФИО клиента:</h3>
-		<h3>Название госуслуги:</h3>
-        <h3>Адрес доставки:</h3>
-		<button class="getCode-btn">Ввести код</button>
+        <h2>Текущий заказ: </h2>
+		<h3>Номер заявки: {{order_id}}</h3>
+		<h3>ФИО клиента:{{order_client}} </h3>
+		<h3>Название госуслуги: {{order_description}}</h3>
+        <h3>Отделение ЦОНа: {{order_department}}</h3>
+		<h3>Адрес ЦОНа: {{order_dep_address}}</h3>
+        <h3>Адрес доставки: {{order_address}}</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button class="getCode-btn" name='get_code' >Ввести код</button>
+        </form>
 	</div>
 
 </body>
