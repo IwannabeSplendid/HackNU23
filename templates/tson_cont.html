@@ -10,7 +10,7 @@
     <div class = "header">
         <p class = "Department">{{em_dep}} | {{dep_address}}</p>
         <p class = "Employee_name">{{em_name}}</p>
-        <input type = "button" value = "Выйти" class = "header_logout">
+        <a href="{% url 'logout' %}"><input type = "button" value = "Выйти" class = "header_logout"></a>
     </div>
 
     <div class = "common">
