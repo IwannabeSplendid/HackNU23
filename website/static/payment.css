@@ -1,77 +1,9 @@
 body {
     margin: 0;
     background-color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.checkbox_container {
-    color: #fff;
-    text-align: center;
-    display: block;
-    position: absolute;
-    padding-top: 0;
-    cursor: pointer;
-    font-size: 14px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  
-  /* Hide the browser's default checkbox */
-  .checkbox_container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  
-  /* Create a custom checkbox */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 15px;
-    height: 15px;
-    width: 15px;
-    background-color: #fff;
-    border-radius: 2px;
-  }
-  
-  /* On mouse-over, add a grey background color */
-  .checkbox_container:hover input ~ .checkmark {
-    background-color: #fff;
-  }
-  
-  /* When the checkbox is checked, add a blue background */
-  .checkbox_container input:checked ~ .checkmark {
-    background-color: #8492ff;
-  }
-  
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
-  /* Show the checkmark when checked */
-  .checkbox_container input:checked ~ .checkmark:after {
-    display: block;
-  }
-  
-  /* Style the checkmark/indicator */
-  .checkbox_container .checkmark:after {
-    left: 5px;
-    top: 2px;
-    width: 2px;
-    height: 6px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
 
 .header {
     margin: 0;
@@ -134,12 +66,12 @@ body {
 }
 
 .track_form {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 500px;
+    position: relative;
+    top: 100px;
+    margin: 0 auto;
+    width: 800px;
     border-radius: 5px;
-    background-color: #c0c7ff;
+    background-color: #b5bdff;
     margin: 0 auto;
     color: #f4f9ff;
     text-align: center;
@@ -148,20 +80,10 @@ body {
 
 .track_form p {
     margin: 0;
-    padding: 12px 0 12px 20px;
+    padding: 15px 0 0 25px;
     text-align: left;
     font-size: 18px;
     color: #ffffff;
-}
-
-.payment_info input {
-    font-size: 10px !important;
-    padding: 10px 20px 10px 20px;
-    width: 300px;
-    margin: 0 0 15px 15px;
-    box-sizing: border-box;
-    border: 0px;
-    border-radius: 2px;
 }
 
 .enteriin {
@@ -194,42 +116,53 @@ body {
 
 .track_form table {
     text-align: left;
+    padding: 15px 0 0 25px;
 }
 
-.main_block {
-    position: relative;
-    top: 100px;
-    margin: 0 auto;
-    width: 1000px;
-    height: 700px;
-}
-
-.payment_info {
-    padding-top: 20px;
-    width: 500px;
-    right: 0;
-    top: 0;
-    height: 680px;
-    position: absolute;
-    background-color: #6c7cdc;
+.track_form table th {
+    padding: 5px 25px 5px 0;
+    font-weight: 400;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .map {
     position: absolute;
     bottom: 0;
-    
     left: 0;
-    width: 500px;
-    height: 400px;
-
-    background-color: #f2ffc5;
+    width: 800px;
+    height: 430px;
+    background-color: #ffa8a8;
+    border-radius: 0 0 5px 5px;
 }
 
-.payment_info select {
-    margin-left: 15px;
-    appearance: none;
+.titled {
+    font-size: 18px !important;
+    border-radius: 5px 5px 0 0;
+    background-color: #8492ff;
+    padding: 20px 25px !important;
+}
+
+.proceed {
+    font-size: 20px;
+    position: absolute;
+    top: 160px;
+    right: 25px;
+    transition: 0.2s;
+    margin-top: 30px;
+    height: 50px;
     border: none;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px 10px 20px;
+    background-color: #8492ff;
     border-radius: 2px;
-    width: 40px;
-    height: 30px;
+}
+
+.proceed:hover {
+    transition: 0.2s;
+    background-color: #7b8aff;
 }

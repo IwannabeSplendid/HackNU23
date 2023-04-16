@@ -33,69 +33,25 @@
         <input type = "button" value = "Отследить" class = "header_track">
         <a href="{% url 'login' %}"><input type = "button" value = "Войти" class = "header_login"></a>
     </div>
-    <div class = "main_block">
     <div class = "track_form">
-        <p class "sector">Отделение: {{ dep_name }}</p><br>
-        <p class "sector">Адрес доставки: {{ address  }}</p>
+        <p class = "titled">Выберите курьерскую службу и подтвердите маршрут</p>
+        <p class = "dep"><em><strong>Отделение:</strong></em> {{ dep_name }}</p>
+        <p class = "del"><em><strong>Адрес доставки:</strong></em> {{ address  }}</p>
+        <form method = "post">
+            {% csrf_token %}
         <table>
-            <tr>
-                <th>Delivery company</th>
-                <th>Delivery cost</th>
-                <th>Activity status</th>
-            </tr>
-            
             {% for company in companies %}
             <tr>
-                <th>{{ company.company_name }}</th>
-                <th>{{ company.company_cost }}</th>
-                <th>{{ company.company_available }}</th>
+                <th><strong>{{ company.company_name }}</strong></th>
+                <th>{{ company.company_cost }}тг.</th>
+                <th><input type = "radio" name = "checkmeout" class = "password_toggle"></th>
             </tr>
             {% endfor %}
         </table>
+        <input type = "submit" value = "Перейти к оплате" class = "proceed">
+        </form>
         <div class = "map">
-
         </div>
-    </div>
-    <div class = "payment_info">
-        <form method = "post">
-            {% csrf_token %}
-            <div>
-                <input type = "text" class = "card_num"" id = "card_num" name = "card_num"" placeholder = "Номер карты"><br>
-                <input type = "text" id = "card_name" name = "card_name" placeholder = "Имя на карте"><br>
-                <input type = "password" id = "cvv" name = "cvv" placeholder = "cvv"><br>
-                <label class="checkbox_container">
-                    <input type = "checkbox" class = "password_toggle" onclick = "showPassword()">Показать CVV
-                        <script>
-                            function showPassword() {
-                                var x = document.getElementById("cvv");
-                                if (x.type === "password") {
-                                    x.type = "text";
-                                } else {
-                                    x.type = "password";
-                                }   
-                            }
-                        </script>
-                    <span class="checkmark"></span>
-                </label>
-                <input type = "text" class = "year" id = "year" name = "year" placeholder = "Год"><br>
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                </select>
-            </div>
-            <input type = "submit" value = "Отследить" class = "track_form_button">
-        </form> 
-    </div>
     </div>
 </body>
 </html> {% endcomment %}

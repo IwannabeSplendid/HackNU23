@@ -1,0 +1,180 @@
+body {
+    margin: 0;
+    background-color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.checkbox_container {
+    color: #fff;
+    text-align: center;
+    display: block;
+    position: absolute;
+    padding-top: 0;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .checkbox_container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 2px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .checkbox_container:hover input ~ .checkmark {
+    background-color: #fff;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .checkbox_container input:checked ~ .checkmark {
+    background-color: #8492ff;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .checkbox_container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .checkbox_container .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 2px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+.header {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #8492ff;
+}
+
+.contact {
+    margin-top: 18px;
+    font-size: 15px;
+    position: absolute;
+    left: 20px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+
+.contact_call {
+    margin-top: 18px;
+    font-size: 15px;
+    position: absolute;
+    left: 70px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+
+.header input { 
+    font-size: 18px;
+    transition: 0.2s;
+    position: absolute;
+    height: 100%;
+    text-decoration: none;
+    color: #f5f8fc;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: #8492ff;
+}
+
+.header input:hover {
+    background-color: #7b8aff;
+    transition: 0.2s;
+}
+
+.header_track {
+    top: 0;
+    right: 140px;
+    width: 125px;
+}
+
+.header_login {
+    top: 0;
+    right: 50px;
+    width: 90px;
+}
+
+
+.payment_info input {
+    font-size: 10px !important;
+    padding: 10px 20px 10px 20px;
+    width: 300px;
+    margin: 0 0 15px 15px;
+    box-sizing: border-box;
+    border: 0px;
+    border-radius: 2px;
+}
+
+.enteriin {
+    margin-top: 15px;
+}
+
+::placeholder {
+    color: #a3aad7;
+}
+
+
+.payment_info {
+    position: relative;
+    top: 200px;
+    margin: 0 auto;
+    width: 600px;
+    border-radius: 5px;
+    background-color: #b5bdff;
+    margin: 0 auto;
+    color: #f4f9ff;
+    text-align: left;
+    height: 500px;
+}
+
+.payment_info select {
+    margin-left: 15px;
+    appearance: none;
+    border: none;
+    border-radius: 2px;
+    width: 40px;
+    height: 30px;
+}
+
+.year {
+  width: 200px !important;
+}
