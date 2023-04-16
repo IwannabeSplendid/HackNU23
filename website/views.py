@@ -139,7 +139,7 @@ def payment(request, order_id):
 def proceed_payment(request, order_id):
     if request.method == "POST":
         order = Order.objects.get(order_id = order_id)
-        order.status = "Waiting for courier"
+        order.status = "Ready to hand"
         order.save()
         return redirect('home')
     return render(request, 'payment2.html')
