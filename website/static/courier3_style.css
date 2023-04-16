@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    background-color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.header {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #8492ff;
+}
+
+.Company {
+    margin-top: 15px;
+    font-size: 15px;
+    position: absolute;
+    left: 20px;
+    height: 100%;
+    color: #f5f8fc;
+    padding: 0;
+}
+.Courier_name {
+    
+    font-size: 16px;
+    position: absolute;
+    right: 140px;
+    height: 100%;
+    color: #dde0e4;
+    padding: 0;
+    font-weight: bold;
+	text-decoration: underline;
+}
+.header input { 
+    font-size: 18px;
+    transition: 0.2s;
+    position: absolute;
+    height: 100%;
+    text-decoration: none;
+    color: #f5f8fc;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background-color: #8492ff;
+}
+
+.header input:hover {
+    background-color: #7b8aff;
+    transition: 0.2s;
+}
+
+.header_logout {
+    top: 0;
+    right: 50px;
+    width: 90px;
+}
+
+.common {
+    top: 100pt;
+    position: relative;
+    margin: 0 auto;
+    width: 40%;
+    background-color: #c6ccfa;
+    border-radius: 15px;
+    text-align: center;
+}
+.info_on_order {
+    margin-left: 15pt;
+    padding: 5pt;
+    padding-bottom: 3pt;
+    top: 20pt;
+    width: 90%;
+    text-align: center;
+}
+
+.info_on_order h3 {
+    font-size: 20px;
+}
+.info_on_order p {
+    font-size: 15px;
+}
+
+.track_form p{
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+    
+}
+.track_form input {
+    font-size: 13px;
+    padding: 10px 20px 10px 20px;
+    width: 200pt;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 0px;
+    border-radius: 2px;
+}
+.code_submit_button {
+    padding: 0;
+    margin-top: 0;
+    height: 35px;
+    border: none;
+    color: #050505;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #8492ff;
+    border-radius: 2px;
+}
+
+.code_submit_button:hover {
+    transition: 0.2s;
+    background-color: #6375fd;
+}
