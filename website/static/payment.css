@@ -114,17 +114,6 @@ body {
     background-color: #7b8aff;
 }
 
-.track_form table {
-    text-align: left;
-    padding: 15px 0 0 25px;
-}
-
-.track_form table th {
-    padding: 5px 25px 5px 0;
-    font-weight: 400;
-    font-size: 18px;
-    font-family: Arial, Helvetica, sans-serif;
-}
 
 .map {
     position: absolute;
@@ -165,4 +154,11 @@ body {
 .proceed:hover {
     transition: 0.2s;
     background-color: #7b8aff;
+}
+
+
+.dels {
+    appearance: none;
+    border-radius: 2px;
+    border: none;
 }

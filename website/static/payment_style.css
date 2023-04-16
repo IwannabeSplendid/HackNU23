@@ -5,13 +5,14 @@ body {
 }
 
 .checkbox_container {
+  margin-top: 10px;
     color: #fff;
     text-align: center;
     display: block;
     position: absolute;
-    padding-top: 0;
+    padding-left: 40px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -31,7 +32,7 @@ body {
   .checkmark {
     position: absolute;
     top: 0;
-    left: 15px;
+    left: 20px;
     height: 15px;
     width: 15px;
     background-color: #fff;
@@ -62,8 +63,8 @@ body {
   
   /* Style the checkmark/indicator */
   .checkbox_container .checkmark:after {
-    left: 5px;
     top: 2px;
+    left: 5px;
     width: 2px;
     height: 6px;
     border: solid white;
@@ -134,11 +135,11 @@ body {
 }
 
 
-.payment_info input {
-    font-size: 10px !important;
-    padding: 10px 20px 10px 20px;
-    width: 300px;
-    margin: 0 0 15px 15px;
+.inps input {
+    font-size: 18px !important;
+    padding: 10px 15px 10px 15px;
+    width: 360px;
+    margin: 25px 0 0 20px;
     box-sizing: border-box;
     border: 0px;
     border-radius: 2px;
@@ -152,29 +153,63 @@ body {
     color: #a3aad7;
 }
 
-
 .payment_info {
     position: relative;
     top: 200px;
     margin: 0 auto;
-    width: 600px;
+    width: 400px;
     border-radius: 5px;
     background-color: #b5bdff;
     margin: 0 auto;
     color: #f4f9ff;
     text-align: left;
-    height: 500px;
+    height: 330px;
 }
 
 .payment_info select {
+  position: absolute;
+  top: 170px;
+  left: 250px;
     margin-left: 15px;
     appearance: none;
     border: none;
     border-radius: 2px;
-    width: 40px;
-    height: 30px;
+    width: 100px;
+    height: 45px;
+    font-size: 18px;
 }
 
-.year {
-  width: 200px !important;
+.track_form_button {
+  width: 360px;
+  position: absolute;
+  top: 250px;
+left: 20px;
+  transition: 0.2s;
+  margin-top: 0;
+  font-size: 20px;
+  height: 60px;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  padding: 10px 20px 10px 20px;
+  background-color: #8492ff;
+  border-radius: 2px;
+}
+
+.track_form_button:hover {
+  transition: 0.2s;
+  background-color: #7b8aff;
+}
+
+.cvv, .year, .month {
+  width: 104px !important;
+}
+
+select {
+  appearance: none;
+  border-radius: 2px;
+  border: none;
 }
