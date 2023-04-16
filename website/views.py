@@ -120,7 +120,7 @@ def proceed_payment(request, order_id):
 def courier_page(request, username):
     courier = Courier.objects.get(user__username = username)
     declined = courier.declined_order.order_id if courier.declined_order else None
-    
+    five_range = [0,1,2,3,4]
     orders = list(Order.objects.filter(~Q(order_id=declined)))
     if len(orders) == 0:
         data = {'courier_name': courier.first_name + ' ' + courier.last_name,
@@ -128,6 +128,7 @@ def courier_page(request, username):
             'courier_image': courier.photo,
             'courier_rating': courier.rating,
             'order' : 0,
+            'range' :five_range,
             }
     else:
         order= random.choice(orders)
@@ -143,6 +144,8 @@ def courier_page(request, username):
                 'order_client': capitalizeFirstLetter(order.client.first_name) + ' ' + capitalizeFirstLetter(order.client.last_name),
                 'order_dep_address': order.department.address,
                 'order' : 1,
+                'range' :five_range,
+                'trustee': order.trustee,
                 }
     if request.method == "POST":
         if "decline" in request.POST:
@@ -155,15 +158,54 @@ def courier_page(request, username):
             order.status = "Waiting for courier"
             order.save()
             return render(request, 'courier_continue.html', data)
-        elif "get_code" in request.POST:
-            code = random.randrange(1000, 9999)
-            phone = get_phone_number(courier.user.IIN)
-            send_sms(phone, code)
+        elif "stop" in request.POST:
+            # code = random.randrange(1000, 9999)
+            # phone = get_phone_number(courier.IIN)
+            # send_sms(phone, code)
             
-            return render(request, 'courier_continue.html', data)
+            return render(request, 'courier3.html', data)
+        elif "accept" in request.POST:
+            if order.client.code == request.POST['code']:
+                order.status = 'Delivered'
+                return render(request, 'courier.html', data)
+            # code = random.randrange(1000, 9999)
+            # phone = get_phone_number(courier.IIN)
+            # send_sms(phone, code)
+            else:
+                return render(request, 'courier.html', {'error': 'Wrong code'})
         
     return render(request, 'courier.html', data)
+
     
+@login_required
+def employee_page(request, username):
+    employee = Employee.objects.get(user__username = username)
+    orders = Order.objects.filter(department__dep_name = employee.department_id.dep_name).order_by('date')
+    
+    order_info = []
+    orders_by_order_id = []
+    for order in orders:
+        temp = {'order_num': str(order.order_id), 'client_name': capitalizeFirstLetter(order.client.first_name) + ' ' + capitalizeFirstLetter(order.client.last_name), 
+                'description': order.description, 'date': order.date}
+        orders_by_order_id.append(order.order_id)
+        order_info.append(temp)
+    print(order_info)
+    data ={
+        'orders' : order_info,
+        'em_name' : employee.first_name + ' ' +employee.last_name,
+        'em_dep' : employee.department_id.dep_name,
+        'dep_address' : employee.department_id.address,
+        'user' : username,
+    }
+        
+    return render(request, 'tson.html', data)
+
+@login_required
+def employee_page_cont(request, username, order_id):
+    
+        
+    return render(request, 'tson_cont.html' )
+
 
 def get_token():
     url = 'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token'
@@ -190,7 +232,7 @@ def login(request):
             elif Employee.objects.filter(user__username = username).exists():
                 return HttpResponseRedirect(reverse('employee_page', args = [username]))
         else:
-            return render(request, 'users/login.html', {
+            return render(request, 'login.html', {
                 'message': 'Invalid credentials'
             })
         

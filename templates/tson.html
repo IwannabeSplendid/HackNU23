@@ -1,13 +1,14 @@
-!DOCTYPE html>
+{%load static%}
+<!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="tson_style.css">
+        <link rel="stylesheet" href="{% static 'tson_style.css' %}">
     <title>Tson POV</title>
     </head>
 <body>
     <div class = "header">
-        <p class = "Department">Отделение | Адрес отделения</p>
-        <p class = "Employee_name">ЦОН Еговович</p>
+        <p class = "Department">{{em_dep}} | {{dep_address}}</p>
+        <p class = "Employee_name">{{em_name}}</p>
         <input type = "button" value = "Выйти" class = "header_logout">
     </div>
     <table class="order_table">
@@ -17,12 +18,18 @@
             <th>Время оформления заказа на доставку</th>
             <th></th>
         </tr>
-        {% for company in companies %}
+        {% for order in orders %}
         <tr>
-            <th>{{ company.name }}</th>
-            <th>{{ company.cost }}</th>
-            <th>{{ company.business }}</th>
-            <td><button class="decline-btn">Выдать</button></td>
+            <th>{{ order.client_name }}</th>
+            <th>{{ order.description }}</th>
+            <th>{{ order.date }}</th>
+            
+            <td>
+                <a href="{% url 'employee_page_cont' username=user order_id=order_num %}">
+                    <button class="decline-btn">Выдать</button>
+                </a>
+            </td>
+            
         </tr>
         {% endfor %}
     </table>

@@ -28,6 +28,8 @@ urlpatterns = [
     path('order/<int:order_id>', website.construct_order, name='order'),
     path('order/<int:order_id>/payment', website.payment, name='payment'),
     path('courier/<str:username>', website.courier_page, name='courier'),
+    path('employee/<str:username>', website.employee_page, name='employee_page'),
+    path('employee/<str:username>/<int:order_id>', website.employee_page_cont, name='employee_page_cont'),
      path('order/<int:order_id>/proceed_payment', website.proceed_payment, name='proceed_payment'),
     path('logout/', website.logout, name='logout'),
 ]

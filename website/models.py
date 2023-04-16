@@ -46,6 +46,7 @@ class Courier(models.Model):
     rating = models.IntegerField() # 1-5
     photo = models.ImageField(upload_to='images', blank=True, null=True)
     declined_order = models.ForeignKey('Order', on_delete=models.CASCADE, blank = True, null = True, related_name='declined_order')
+    code = models.CharField(max_length=10, blank = True, null = True)
     
     def __str__(self):
         return self.first_name
@@ -66,9 +67,10 @@ class Client(models.Model):
     IIN = models.CharField(max_length = 15, unique=True)
     phone_number = models.CharField(max_length=15, blank = True, null = True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null = True)
+    code = models.CharField(max_length=10, blank = True, null = True)
     
     def __str__(self):
-        return self.first_name
+        return capitalizeFirstLetter(self.first_name) + " " + capitalizeFirstLetter(self.last_name)
 
 class Order(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='client')
@@ -84,3 +86,8 @@ class Order(models.Model):
     
     def __str__(self):
         return str(self.order_id)
+
+
+def capitalizeFirstLetter(string):
+    return string[0]+ string[1:].lower();
+

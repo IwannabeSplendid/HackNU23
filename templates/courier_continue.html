@@ -13,9 +13,6 @@
     </div>
 
     <div class = "courier_info">
-        <div class = "courier_photo">
-            <img src="{{courier_photo.url}}" alt="Profile Picture">
-        </div>
         <div class = "courier_details">
             <h2 class="courier_name"> {{courier_name}} </h2>
             <p class="company_name"> {{courier_company}} </p>
@@ -40,7 +37,7 @@
         <h3>Адрес доставки: {{order_address}}</h3>
         <form action="" method="post">
             {% csrf_token %}
-            <button class="getCode-btn" name='get_code' >Ввести код</button>
+            <button class="getCode-btn" name='stop' value = 'stop'> Завершить заказ</button>
         </form>
 	</div>
 

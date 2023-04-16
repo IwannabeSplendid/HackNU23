@@ -14,14 +14,11 @@
     </div>
 
     <div class = "courier_info">
-        <div class = "courier_photo">
-            <img src="{{courier_photo.url}}" alt="Profile Picture">
-        </div>
         <div class = "courier_details">
             <h2 class="courier_name"> {{courier_name}} </h2>
             <p class="company_name"> {{courier_company}} </p>
             <div class ="rating">
-                {% for i in range 5 %}
+                {% for i in range %}
                     {% if i < courier_rating %}
                         <span class="star">&#9733;</span>
                     {% else %}
@@ -49,7 +46,7 @@
         <form action="" method="post">
             {% csrf_token %}
             <button type="submit" name='decline' class="decline-btn" >Отказаться</button>
-            <button type="submit" name='accept' class="getCode-btn" >Получить код</button>
+            <button type="submit" name='accept' class="getCode-btn" >Взять заказ</button>
         </form>
 	</div>
     {% endif %}
