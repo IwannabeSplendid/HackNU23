@@ -25,12 +25,12 @@
             <th>{{ order.date }}</th>
             
             <td>
-                <a href="{% url 'employee_page_cont' username=user order_id=order_num %}">
-                    <button class="decline-btn">Выдать</button>
+                <a href="http://127.0.0.1:8000/employee/{{user}}/{{order_num}}">
+                    <input type = "button" value = "Выдать" class = "decline-btn">
                 </a>
             </td>
             
-        </tr>
+        </tr>s
         {% endfor %}
     </table>
 </body>

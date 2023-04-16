@@ -27,7 +27,54 @@
         <input type = "submit" value = "Перейти к оплате" class = "proceed">
         </form>
         <div class = "map">
+            <div id="map" style="width:600px; height: 400px;"></div>
         </div>
     </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10&libraries=places"></script>
+
+<script>
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: new google.maps.LatLng(+"{{address_lat|stringformat:".2f" }}", +"{{address_lng|stringformat:".2f"}}"),
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+    });
+    
+    const directionsService = new google.maps.DirectionsService();
+
+    new google.maps.Marker({
+        position: {'lat':+'{{address_lat|stringformat:".8f"}}', 'lng':+'{{address_lng|stringformat:".8f"}}'},
+        map,
+        title: "{{address_map}}",
+      });
+    
+    new google.maps.Marker({
+        position: {'lat':+'{{address_dep_lat|stringformat:".8f"}}', 'lng':+'{{address_dep_lng|stringformat:".8f"}}'},
+        map,
+        title: "{{address_dep}}",
+      });
+
+    directionsService.route(
+        {
+                origin: new google.maps.LatLng('{{address_lat|stringformat:".8f"}}', '{{address_lng|stringformat:".8f"}}'),
+                destination: new google.maps.LatLng('{{address_dep_lat|stringformat:".8f"}}', '{{address_dep_lng|stringformat:".8f"}}'),
+                travelMode: "DRIVING",
+        },
+        (response, status) => {
+            if (status === "OK") {
+    
+                new google.maps.DirectionsRenderer({
+                    suppressMarkers: true,
+                    directions: response,
+                    map: map,
+                    polylineOptions: {
+                        strokeColor: "green"
+                      }
+                  });
+            }
+        }
+    )
+
+      
+</script>
 </body>
 </html> 

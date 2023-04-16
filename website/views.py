@@ -56,7 +56,7 @@ def construct_order(request, order_id):
         floor = request.POST['floor']
         corpus = request.POST['corpus']
         zk_name = request.POST['zk_name']
-        trustee = request.POST['trustee']
+        trustee = request.POST.get('trustee', None)
         extra = request.POST.get('extra', None)
         
         address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment or None, 
@@ -121,7 +121,7 @@ def courier_page(request, username):
     courier = Courier.objects.get(user__username = username)
     declined = courier.declined_order.order_id if courier.declined_order else None
     five_range = [0,1,2,3,4]
-    orders = list(Order.objects.filter(~Q(order_id=declined)))
+    orders = list(Order.objects.filter(~Q(order_id=declined, status = "Delivered") ))
     if len(orders) == 0:
         data = {'courier_name': courier.first_name + ' ' + courier.last_name,
             'courier_company': courier.company_id.company_name,
@@ -197,6 +197,14 @@ def employee_page(request, username):
         'dep_address' : employee.department_id.address,
         'user' : username,
     }
+    
+    if request.method == "POST":
+        if "Give" in request.POST:
+            sms = f"Сіздің #{order.order_id} құжатыңыз дайын. http://127.0.0.1:8000/order/order.order_id адреса доставки/ сілтемесін басу арқылы құжатты жеткізуді пайдалана аласыз. Құжатты жеткізу курьерлік қызметтің жеткізу мерзімдеріне сәйкес жүзеге асырылады. Ваш документ #{order.order_id} готов. Можете воспользоваться доставкой документа следуя по ссылке http://127.0.0.1:8000/order/order.order_id адреса доставки/ Доставка осуществляется в соответствии со сроками доставки курьерской службы"
+            phone = get_phone_number(order.client.IIN)
+            send_sms(phone, sms)
+            return render(request, 'tson_cont.html' )
+        
         
     return render(request, 'tson.html', data)
 
