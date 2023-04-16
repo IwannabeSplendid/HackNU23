@@ -17,7 +17,7 @@
         <form method = "post">
             {% csrf_token %}
             <div>
-                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите код"><br>
+                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = {{code}}><br>
             </div>
             <input type = "submit" value = "Отправить" class = "track_form_button">
         </form> 

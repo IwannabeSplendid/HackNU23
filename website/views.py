@@ -39,10 +39,8 @@ def construct_order(request, order_id):
     order = Order.objects.get(order_id = order_id)
     if order.status == "In progress":
         if request.method == "POST":
-            code = random.randrange(1000, 9999)
-            phone = get_phone_number(order.courier.IIN)
-            send_sms(phone, code)
-        return render("client_generate.html")
+            return redirect('code_final', order_id = order_id)
+        return render(request, 'client_generate.html')
     else:
         data = {'order_id': order.order_id, 
                         'order_description': order.description,
@@ -79,6 +77,19 @@ def construct_order(request, order_id):
             return redirect('payment', order_id = order.order_id)
         
         return render(request, 'client.html', data)
+
+def code_final(request, order_id):
+    print('hello')
+    order = Order.objects.get(order_id = order_id)
+    code = random.randrange(1000, 9999)
+    phone = get_phone_number(order.courier.IIN)
+    send_sms(phone, code)
+    data = {
+        'code' : code,
+    }
+    order.client.code = code
+    order.client.save()
+    return render(request, 'client_generate.html', data)
 
 def payment(request, order_id):
     order = Order.objects.get(order_id = order_id)

@@ -30,8 +30,9 @@ urlpatterns = [
     path('courier/<str:username>', website.courier_page, name='courier'),
     path('employee/<str:username>', website.employee_page, name='employee_page'),
     path('employee/<str:username>/<int:order_id>', website.employee_page_cont, name='employee_page_cont'),
-     path('order/<int:order_id>/proceed_payment', website.proceed_payment, name='proceed_payment'),
+    path('order/<int:order_id>/proceed_payment', website.proceed_payment, name='proceed_payment'),
     path('logout/', website.logout, name='logout'),
+    path('code_final/<int:order_id>', website.code_final, name='code_final'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
