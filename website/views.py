@@ -26,7 +26,7 @@ def home(request):
             client.save()
             
         order = Order.objects.get(order_id = order_number)
-        print(order.client.IIN)
+
         if order.client.IIN == iin:
             return redirect('order', order_id = order_number)
             
@@ -87,15 +87,24 @@ def payment(request, order_id):
         temp = {'company_name': company.company_name, 'company_cost': company_cost, 'company_available': company_available}
         com_data.append(temp)
     
-    response = requests.get('https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJeRpOeF67j4AR9ydy_PIzPuM&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
+    address_map = order.address.house_number + ', ' + order.address.street_name + ', ' + order.address.city+ ', ' + 'Kazakhstan'
+    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={address_map}&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
     resp_json_payload = response.json()
-    address_lat_lon = resp_json_payload['results'][0]['geometry']['location']
-    print(address_lat_lon)    
+    address_lat_lon = resp_json_payload['results'][0]['geometry']['location'] 
+    
+    dep_address = order.department.address.house_number + ', ' + order.department.address.street_name + ', ' +order.department.address.city+ ', ' + 'Kazakhstan'
+    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={dep_address}&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
+    resp_json_payload = response.json()
+    address_dep_lat_lon = resp_json_payload['results'][0]['geometry']['location'] 
     data = {'dep_name': order.department.dep_name,
             'address': order.address, 
             'companies' : com_data,
             'address_lat': address_lat_lon['lat'],
             'address_lng': address_lat_lon['lng'],
+            'address_dep_lat': address_dep_lat_lon['lat'],
+            'address_dep_lng': address_dep_lat_lon['lng'],
+            'address_dep': dep_address,
+            'address_map': address_map,
                     }
     
     if request.method == "POST":
