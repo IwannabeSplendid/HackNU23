@@ -18,16 +18,12 @@
         <p class = "dep"><em><strong>Отделение:</strong></em> {{ dep_name }}</p>
         <p class = "del"><em><strong>Адрес доставки:</strong></em> {{ address  }}</p>
         <form method = "post">
-            {% csrf_token %}
-        <table>
+        {% csrf_token %}
+        <select class = "dels">
             {% for company in companies %}
-            <tr>
-                <th><strong>{{ company.company_name }}</strong></th>
-                <th>{{ company.company_cost }}тг.</th>
-                <th><input type = "radio" name = "checkmeout" class = "password_toggle"></th>
-            </tr>
+            <option name = "{{company.company_name}}">{{company.company_name}} - {{company.company_cost}}</option>
             {% endfor %}
-        </table>
+        </select>
         <input type = "submit" value = "Перейти к оплате" class = "proceed">
         </form>
         <div class = "map">
