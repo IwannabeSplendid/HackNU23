@@ -24,12 +24,13 @@
             <p>Время оформления доставки: {{order_time}}</p>
         </div>
         <div class = "track_form">
-            <p>Подвердите доставку</p>
+            <p>Подтвердите доставку</p>
             <form method = "post">
+                {% csrf_token %}
                 <div>
                     <input type = "text" class = "enter_code" name = "code" placeholder = "Введите код с СМС клиента"><br>
                 </div>
-                <input type = "submit" name = 'accept' value = "Подвердить" class = "code_submit_button">
+                <input type = "submit" name = 'confirm' value = "Подвердить" class = "code_submit_button">
             </form> 
             </div>
         </div>

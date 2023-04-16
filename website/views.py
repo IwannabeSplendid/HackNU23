@@ -79,7 +79,6 @@ def construct_order(request, order_id):
         return render(request, 'client.html', data)
 
 def code_final(request, order_id):
-    print('hello')
     order = Order.objects.get(order_id = order_id)
     code = random.randrange(1000, 9999)
     phone = get_phone_number(order.courier.IIN)
@@ -186,17 +185,19 @@ def courier_page(request, username):
             courier.save()
             order.status = "Waiting for courier"
             order.save()
+            code = random.randrange(1000, 9999)
+            phone = get_phone_number(courier.IIN)
+            send_sms(phone, code)
+            courier.code = code
             return render(request, 'courier_continue.html', data)
         elif "stop" in request.POST:
-            
             return render(request, 'courier3.html', data)
-        elif "accept" in request.POST:
-            if order.client.code == request.POST['code']:
+        elif "confirm" in request.POST:
+            print(f"{request.POST['code']}, {order.client.code}")
+            if str(order.client.code) == str(request.POST['code']):
                 order.status = 'Delivered'
+                order.save()
                 return render(request, 'courier.html', data)
-            # code = random.randrange(1000, 9999)
-            # phone = get_phone_number(courier.IIN)
-            # send_sms(phone, code)
             else:
                 return render(request, 'courier.html', {'error': 'Wrong code'})
         
@@ -215,7 +216,6 @@ def employee_page(request, username):
                 'description': order.description, 'date': order.date}
         orders_by_order_id.append(order.order_id)
         order_info.append(temp)
-    print(order_info)
     data ={
         'orders' : order_info,
         'em_name' : employee.first_name + ' ' +employee.last_name,
@@ -236,9 +236,31 @@ def employee_page(request, username):
 
 @login_required
 def employee_page_cont(request, username, order_id):
+    employee = Employee.objects.get(user__username = username)
+    orders = Order.objects.get(order_id = order_id)
+    data ={
+        'order_client' : capitalizeFirstLetter(orders.client.first_name) + ' ' + capitalizeFirstLetter(orders.client.last_name),
+        'trustee' : orders.trustee,
+        'order_desc' : orders.description,
+        'order_date' : orders.date,
+        'user' : username,
+        'order_courier' : orders.courier,
+        'order_comp' : orders.courier.company_id.company_name,
+        'order_id' : orders.order_id,
+        'em_name' : employee.first_name + ' ' +employee.last_name,
+        'em_dep' : employee.department_id.dep_name,
+        'dep_address' : employee.department_id.address,
+    }
+    if request.POST:
+        code = request.POST['code']
+        right_code = orders.courier.code
+        if code == right_code:
+            orders.status = "In progress"
+            orders.save()
+            return render(request, 'tson.html', data)
     
         
-    return render(request, 'tson_cont.html' )
+    return render(request, 'tson_cont.html', data )
 
 
 def get_token():

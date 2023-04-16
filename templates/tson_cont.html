@@ -8,27 +8,28 @@
 </head>
 <body>
     <div class = "header">
-        <p class = "Department">Отделение | Адрес отделения</p>
-        <p class = "Employee_name">ЦОН Еговович</p>
+        <p class = "Department">{{em_dep}} | {{dep_address}}</p>
+        <p class = "Employee_name">{{em_name}}</p>
         <input type = "button" value = "Выйти" class = "header_logout">
     </div>
 
     <div class = "common">
         <div class = "info_on_order">
-            <h3>Документ №004586235412</h3>
-            <p>ФИО клиента: </p>
-            <p>ФИО доверенного лица: </p>
-            <p>Название госуслуги: </p>
-            <p>Время оформления доставки: </p>
-            <input type = "button" value = "Выбрать другой документ" class = "goBackOrders">
+            <h3>Документ №{{order_id}}</h3>
+            <p>ФИО клиента: {{order_client}}</p>
+            <p>ФИО доверенного лица: {{trustee}}</p>
+            <p>Название госуслуги: {{order_desc}}</p>
+            <p>Время оформления доставки: {{order_date}}</p>
+            <a href= {% url 'employee_page' user%}><input type = "button" value = "Выбрать другой документ" class = "goBackOrders"></a>
         </div>
         <div class = "info_on_courier">
-            <h3>Курьер: </h3>
-            <p>ФИО курьера: </p>
-            <p>Компания: </p>
+            <h3>Курьер:  </h3>
+            <p>ФИО курьера: {{order_courier}} </p>
+            <p>Компания: {{order_comp}} </p>
             <div class = "track_form">
                 <p>Подвердите курьера</p>
                 <form method = "post">
+                    {% csrf_token %}
                     <div>
                         <input type = "text" class = "enter_code" name = "code" placeholder = "Введите код с СМС курьера"><br>
                     </div>
