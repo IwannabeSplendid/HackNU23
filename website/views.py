@@ -93,7 +93,21 @@ def code_final(request, order_id):
 def payment(request, order_id):
     order = Order.objects.get(order_id = order_id)
     
-    cost = 1000
+    address_map = order.address.house_number + ', ' + order.address.street_name + ', ' + order.address.city+ ', ' + 'Kazakhstan'
+    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={address_map}&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
+    resp_json_payload = response.json()
+    address_lat_lon = resp_json_payload['results'][0]['geometry']['location'] 
+    
+    dep_address = order.department.address.house_number + ', ' + order.department.address.street_name + ', ' +order.department.address.city+ ', ' + 'Kazakhstan'
+    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={dep_address}&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
+    resp_json_payload = response.json()
+    address_dep_lat_lon = resp_json_payload['results'][0]['geometry']['location'] 
+    try:
+        distance = requests.get(f'https://maps.googleapis.com/maps/api/distancematrix/json?destinations={dep_address}&origins={address_map}%2C%20DC%7CBoston&units=metric&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10').json()['rows'][0]['elements'][0]['distance']['value']
+        cost = int(200* int(distance)//10000)
+    except:
+        cost = 1000
+        
     com_data = []
     for company in Company.objects.all():
         all_couriers = len(Courier.objects.filter(company_id__company_name = company.company_name))
@@ -104,15 +118,6 @@ def payment(request, order_id):
         temp = {'company_name': company.company_name, 'company_cost': company_cost, 'company_available': company_available}
         com_data.append(temp)
     
-    address_map = order.address.house_number + ', ' + order.address.street_name + ', ' + order.address.city+ ', ' + 'Kazakhstan'
-    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={address_map}&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
-    resp_json_payload = response.json()
-    address_lat_lon = resp_json_payload['results'][0]['geometry']['location'] 
-    
-    dep_address = order.department.address.house_number + ', ' + order.department.address.street_name + ', ' +order.department.address.city+ ', ' + 'Kazakhstan'
-    response = requests.get(f'https://maps.googleapis.com/maps/api/geocode/json?address={dep_address}&key=AIzaSyAd0kKAY8yNMxSL0847Lf7rUexclIDQT10')
-    resp_json_payload = response.json()
-    address_dep_lat_lon = resp_json_payload['results'][0]['geometry']['location'] 
     data = {'dep_name': order.department.dep_name,
             'address': order.address, 
             'companies' : com_data,
@@ -124,12 +129,11 @@ def payment(request, order_id):
             'address_map': address_map,
                     }
     
-    
     if request.method == "POST":
         print(request.POST)
         if 'pay' in request.POST:
             order.status = "Ready to hand"
-            comp = Company.objects.get(company_name = "Yandex.Taxi")
+            comp = Company.objects.get(company_name = "AstanaMotors")
             order.company_courier = comp
             order.save()
             return redirect('proceed_payment', order_id = order.order_id)
@@ -149,7 +153,7 @@ def courier_page(request, username):
     courier = Courier.objects.get(user__username = username)
     declined = courier.declined_order.order_id if courier.declined_order else None
     five_range = [0,1,2,3,4]
-    orders = list(Order.objects.filter(~Q(order_id=declined, status = "Delivered") ))
+    orders = list(Order.objects.filter(~Q(order_id=declined), status = "Ready to hand" ))
     if len(orders) == 0:
         data = {'courier_name': courier.first_name + ' ' + courier.last_name,
             'courier_company': courier.company_id.company_name,
@@ -233,7 +237,7 @@ def employee_page(request, username):
 def employee_page_cont(request, username, order_id):
     employee = Employee.objects.get(user__username = username)
     orders = Order.objects.get(order_id = order_id)
-    
+    order = orders
     if orders.status == "Not ready":
         sms = f"Сіздің #{orders.order_id} құжатыңыз дайын. http://127.0.0.1:8000/order/{order.order_id} адреса доставки/ сілтемесін басу арқылы құжатты жеткізуді пайдалана аласыз. Құжатты жеткізу курьерлік қызметтің жеткізу мерзімдеріне сәйкес жүзеге асырылады. Ваш документ #{orders.order_id} готов. Можете воспользоваться доставкой документа следуя по ссылке http://127.0.0.1:8000/order/{order.order_id} адреса доставки/ Доставка осуществляется в соответствии со сроками доставки курьерской службы"
         phone = get_phone_number(orders.client.IIN)
