@@ -128,7 +128,7 @@ def payment(request, order_id):
     if request.method == "POST":
         print(request.POST)
         if 'pay' in request.POST:
-            order.status = "Waiting for courier"
+            order.status = "Ready to hand"
             comp = Company.objects.get(company_name = "Yandex.Taxi")
             order.company_courier = comp
             order.save()
@@ -189,6 +189,9 @@ def courier_page(request, username):
             phone = get_phone_number(courier.IIN)
             send_sms(phone, code)
             courier.code = code
+            courier.save()
+            order.courier = courier
+            order.save()
             return render(request, 'courier_continue.html', data)
         elif "stop" in request.POST:
             return render(request, 'courier3.html', data)
@@ -207,7 +210,7 @@ def courier_page(request, username):
 @login_required
 def employee_page(request, username):
     employee = Employee.objects.get(user__username = username)
-    orders = Order.objects.filter(department__dep_name = employee.department_id.dep_name, status = "Not ready").order_by('date')
+    orders = Order.objects.filter(department__dep_name = employee.department_id.dep_name).order_by('date')
     
     order_info = []
     orders_by_order_id = []
@@ -223,44 +226,48 @@ def employee_page(request, username):
         'dep_address' : employee.department_id.address,
         'user' : username,
     }
-    
-    if request.method == "POST":
-        if "Give" in request.POST:
-            sms = f"Сіздің #{order.order_id} құжатыңыз дайын. http://127.0.0.1:8000/order/order.order_id адреса доставки/ сілтемесін басу арқылы құжатты жеткізуді пайдалана аласыз. Құжатты жеткізу курьерлік қызметтің жеткізу мерзімдеріне сәйкес жүзеге асырылады. Ваш документ #{order.order_id} готов. Можете воспользоваться доставкой документа следуя по ссылке http://127.0.0.1:8000/order/order.order_id адреса доставки/ Доставка осуществляется в соответствии со сроками доставки курьерской службы"
-            phone = get_phone_number(order.client.IIN)
-            send_sms(phone, sms)
-            return render(request, 'tson_cont.html' )
-        
-        
+            
     return render(request, 'tson.html', data)
 
 @login_required
 def employee_page_cont(request, username, order_id):
     employee = Employee.objects.get(user__username = username)
     orders = Order.objects.get(order_id = order_id)
-    data ={
-        'order_client' : capitalizeFirstLetter(orders.client.first_name) + ' ' + capitalizeFirstLetter(orders.client.last_name),
-        'trustee' : orders.trustee,
-        'order_desc' : orders.description,
-        'order_date' : orders.date,
-        'user' : username,
-        'order_courier' : orders.courier,
-        'order_comp' : orders.courier.company_id.company_name,
-        'order_id' : orders.order_id,
-        'em_name' : employee.first_name + ' ' +employee.last_name,
-        'em_dep' : employee.department_id.dep_name,
-        'dep_address' : employee.department_id.address,
-    }
-    if request.POST:
-        code = request.POST['code']
-        right_code = orders.courier.code
-        if code == right_code:
-            orders.status = "In progress"
-            orders.save()
-            return render(request, 'tson.html', data)
     
+    if orders.status == "Not ready":
+        sms = f"Сіздің #{orders.order_id} құжатыңыз дайын. http://127.0.0.1:8000/order/{order.order_id} адреса доставки/ сілтемесін басу арқылы құжатты жеткізуді пайдалана аласыз. Құжатты жеткізу курьерлік қызметтің жеткізу мерзімдеріне сәйкес жүзеге асырылады. Ваш документ #{orders.order_id} готов. Можете воспользоваться доставкой документа следуя по ссылке http://127.0.0.1:8000/order/{order.order_id} адреса доставки/ Доставка осуществляется в соответствии со сроками доставки курьерской службы"
+        phone = get_phone_number(orders.client.IIN)
+        print(phone)
+        send_sms(phone, sms)
+        return render(request, 'tson_cont.html' )
+    else:
+        data ={
+            'order_client' : capitalizeFirstLetter(orders.client.first_name) + ' ' + capitalizeFirstLetter(orders.client.last_name),
+            'trustee' : orders.trustee,
+            'order_desc' : orders.description,
+            'order_date' : orders.date,
+            'user' : username,
+            'em_name' : employee.first_name + ' ' +employee.last_name,
+            'em_dep' : employee.department_id.dep_name,
+            'dep_address' : employee.department_id.address,
+        }
+        if orders.courier:
+            data.update({
+                'order_courier' : orders.courier,
+                'order_comp' : orders.courier.company_id.company_name if orders.courier.company_id else None,
+                'order_id' : orders.order_id,
+            }
+            )
+        if request.POST:
+            code = request.POST['code']
+            right_code = orders.courier.code
+            if code == right_code:
+                orders.status = "In progress"
+                orders.save()
+                return render(request, 'tson.html', data)
         
-    return render(request, 'tson_cont.html', data )
+            
+        return render(request, 'tson_cont.html', data )
 
 
 def get_token():
