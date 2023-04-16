@@ -37,41 +37,48 @@ def home(request):
 
 def construct_order(request, order_id):
     order = Order.objects.get(order_id = order_id)
-    data = {'order_id': order.order_id, 
-                    'order_description': order.description,
-                    'order_department': order.department.dep_name,
-                    'client_iin': order.client.IIN,
-                    'client_first_name': capitalizeFirstLetter(order.client.first_name),
-                    'client_last_name': capitalizeFirstLetter(order.client.last_name),
-                    'client_phone_number': '+' + order.client.phone_number,
-                    }
-    
-    if request.method == "POST":
-        region = request.POST['region']
-        city = request.POST['city']
-        street = request.POST['street']
-        house = request.POST['house']
-        apartment = request.POST['apartment']
-        order_number = request.POST['order_number']
-        floor = request.POST['floor']
-        corpus = request.POST['corpus']
-        zk_name = request.POST['zk_name']
-        trustee = request.POST.get('trustee', None)
-        extra = request.POST.get('extra', None)
+    if order.status == "In progress":
+        if request.method == "POST":
+            code = random.randrange(1000, 9999)
+            phone = get_phone_number(order.courier.IIN)
+            send_sms(phone, code)
+        return render("client_generate.html")
+    else:
+        data = {'order_id': order.order_id, 
+                        'order_description': order.description,
+                        'order_department': order.department.dep_name,
+                        'client_iin': order.client.IIN,
+                        'client_first_name': capitalizeFirstLetter(order.client.first_name),
+                        'client_last_name': capitalizeFirstLetter(order.client.last_name),
+                        'client_phone_number': '+' + order.client.phone_number,
+                        }
         
-        address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment or None, 
-                          floor = floor or None, podezd = order_number or None, corpus = corpus or None, zk_name = zk_name or None, add_info = extra or None)
-        address.save()
-        order.address =address
-        order.date = datetime.now()
-        if Client.objects.filter(IIN=trustee).exists():
-            order.trustee = trustee
-        order.save()
-        order.client.address = address
-        order.client.save() 
-        return redirect('payment', order_id = order.order_id)
-    
-    return render(request, 'client.html', data)
+        if request.method == "POST":
+            region = request.POST['region']
+            city = request.POST['city']
+            street = request.POST['street']
+            house = request.POST['house']
+            apartment = request.POST['apartment']
+            order_number = request.POST['order_number']
+            floor = request.POST['floor']
+            corpus = request.POST['corpus']
+            zk_name = request.POST['zk_name']
+            trustee = request.POST.get('trustee', None)
+            extra = request.POST.get('extra', None)
+            
+            address = Address(oblast= region, city = city, street_name = street, house_number = house, apartment_number = apartment or None, 
+                            floor = floor or None, podezd = order_number or None, corpus = corpus or None, zk_name = zk_name or None, add_info = extra or None)
+            address.save()
+            order.address =address
+            order.date = datetime.now()
+            if Client.objects.filter(IIN=trustee).exists():
+                order.trustee = trustee
+            order.save()
+            order.client.address = address
+            order.client.save() 
+            return redirect('payment', order_id = order.order_id)
+        
+        return render(request, 'client.html', data)
 
 def payment(request, order_id):
     order = Order.objects.get(order_id = order_id)
@@ -107,13 +114,24 @@ def payment(request, order_id):
             'address_map': address_map,
                     }
     
+    
     if request.method == "POST":
-        #save
-        return 0 
+        print(request.POST)
+        if 'pay' in request.POST:
+            order.status = "Waiting for courier"
+            comp = Company.objects.get(company_name = "Yandex.Taxi")
+            order.company_courier = comp
+            order.save()
+            return redirect('proceed_payment', order_id = order.order_id)
     
     return render(request, 'payment.html', data)
 
 def proceed_payment(request, order_id):
+    if request.method == "POST":
+        order = Order.objects.get(order_id = order_id)
+        order.status = "Waiting for courier"
+        order.save()
+        return redirect('home')
     return render(request, 'payment2.html')
 
 @login_required
@@ -159,9 +177,6 @@ def courier_page(request, username):
             order.save()
             return render(request, 'courier_continue.html', data)
         elif "stop" in request.POST:
-            # code = random.randrange(1000, 9999)
-            # phone = get_phone_number(courier.IIN)
-            # send_sms(phone, code)
             
             return render(request, 'courier3.html', data)
         elif "accept" in request.POST:
@@ -180,12 +195,12 @@ def courier_page(request, username):
 @login_required
 def employee_page(request, username):
     employee = Employee.objects.get(user__username = username)
-    orders = Order.objects.filter(department__dep_name = employee.department_id.dep_name).order_by('date')
+    orders = Order.objects.filter(department__dep_name = employee.department_id.dep_name, status = "Not ready").order_by('date')
     
     order_info = []
     orders_by_order_id = []
     for order in orders:
-        temp = {'order_num': str(order.order_id), 'client_name': capitalizeFirstLetter(order.client.first_name) + ' ' + capitalizeFirstLetter(order.client.last_name), 
+        temp = {'order_num': order.order_id, 'client_name': capitalizeFirstLetter(order.client.first_name) + ' ' + capitalizeFirstLetter(order.client.last_name), 
                 'description': order.description, 'date': order.date}
         orders_by_order_id.append(order.order_id)
         order_info.append(temp)

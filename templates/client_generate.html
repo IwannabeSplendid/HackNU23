@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'client_generate.css' %}">
+<title>Track</title>
+</head>
+<body>
+    <div class = "header">
+        <p class = "contact">1414</p>
+        <p class = "contact_call">+7-7172-906-984</p>
+        <input type = "button" value = "Отследить" class = "header_track">
+        <a href="{% url 'login' %}"><input type = "button" value = "Войти" class = "header_login"></a>
+    </div>
+    <div class = "track_form">
+        <form method = "post">
+            {% csrf_token %}
+            <div>
+                <input type = "text" class = "enteriin" id = "iin" name = "iin" placeholder = "Введите код"><br>
+            </div>
+            <input type = "submit" value = "Отправить" class = "track_form_button">
+        </form> 
+    </div>
+</body>
+</html>

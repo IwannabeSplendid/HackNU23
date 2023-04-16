@@ -77,6 +77,7 @@ class Order(models.Model):
     order_id = models.CharField(max_length = 15, unique=True)
     courier = models.ForeignKey(Courier, on_delete=models.SET_NULL, blank = True, null = True)
     description = models.TextField(max_length=200)
+    company_courier = models.ForeignKey(Company, on_delete=models.CASCADE, blank = True, null = True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=[("Not ready", "Not ready"),("Ready to hand", "Ready to hand"), 
                                                       ("Waiting for courier", "Waiting for courier"), ("In progress", "In progress"), ("Delivered", "Delivered")])

@@ -19,12 +19,12 @@
         <p class = "del"><em><strong>Адрес доставки:</strong></em> {{ address  }}</p>
         <form method = "post">
         {% csrf_token %}
-        <select class = "dels">
+        <select name = "compname" class = "dels">
             {% for company in companies %}
-            <option name = "{{company.company_name}}">{{company.company_name}} - {{company.company_cost}}</option>
+            <option name = "comp_name" value ="{{company.company_name}}" >{{company.company_name}} - {{company.company_cost}}</option>
             {% endfor %}
         </select>
-        <input type = "submit" value = "Перейти к оплате" class = "proceed">
+        <input type = "submit" name="pay" value = "Перейти к оплате" class = "proceed">
         </form>
         <div class = "map">
             <div id="map" style="width:600px; height: 400px;"></div>
