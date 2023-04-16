@@ -69,8 +69,8 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .courier_photo {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     overflow: hidden;
     border-radius: 50%;
   }
@@ -86,15 +86,16 @@ body {
   }
   
   .courier_name {
-    font-size: 36px;
+    font-size: 25px;
     font-weight: bold;
     margin: 0;
   }
   
   .company_name {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: medium;
     margin: 0;
+    margin-top: 5pt;
   }
   
   .order_count {
@@ -103,16 +104,17 @@ body {
   }
   
   .rating {
-    font-size: 24px;
+    margin-top: 15pt;
+    
   }
   
   .star {
     color: #FFD700;
-    margin-right: 5px;
+    margin-right: 2px;
   }
   .rating_number {
-    margin-left: 10px;
-    font-weight: bold;
+    margin-left: 5px;
+    font-size: 16px;
   }
 
   .new_order{
@@ -122,20 +124,20 @@ body {
   }
 
   .decline-btn {
-    background-color: #f44336;
+    background-color: #e67870;
     color: #fff;
-    border: 1px solid #b19a9a;
+    border: none;
     padding: 0.5rem;
     border-radius: 5px;
     cursor: pointer;
   }
 
   .new_order decline-btn:hover {
-    background-color: #e53935;
+    background-color: #b4706e;
   }
 
   .getCode-btn {
-    background-color: #2cdb35;
+    background-color: #5ae361;
     color: #fff;
     border: none;
     padding: 0.5rem;

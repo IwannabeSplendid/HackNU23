@@ -21,11 +21,13 @@
             <h2 class="courier_name"> {{courier_name}} </h2>
             <p class="company_name"> {{courier_company}} </p>
             <div class ="rating">
-                <span class="star">&#9733;</span>
-                <span class="star">&#9733;</span>
-                <span class="star">&#9733;</span>
-                <span class="star">&#9733;</span>
-                <span class="star">&#9733;</span>
+                {% for i in range 5 %}
+                    {% if i < courier_rating %}
+                        <span class="star">&#9733;</span>
+                    {% else %}
+                        <span class="star">&#9734;</span>
+                    {% endif %}
+                {% endfor %}
                 <span class="rating_number">{{ courier_rating}}</span>
             </div>
         </div>
